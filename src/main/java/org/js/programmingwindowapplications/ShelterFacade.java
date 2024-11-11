@@ -12,8 +12,6 @@ public class ShelterFacade {
      *         or null if the credentials are invalid.
      */
     public String validateUser(String username, String password) {
-        // Hardcoded example for demonstration purposes.
-        // Replace this with your actual authentication mechanism.
         if ("admin".equals(username) && "adminpass".equals(password)) {
             return "admin";
         } else if ("user".equals(username) && "userpass".equals(password)) {
@@ -21,8 +19,6 @@ public class ShelterFacade {
         }
         return null;
     }
-
-    // Additional methods can be added here to manage animals, handle adoptions, etc.
 
     // For example:
     public void addAnimal(String name, String type) {

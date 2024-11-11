@@ -27,16 +27,6 @@ public class LoginController {
         this.mainApp = mainApp;
     }
 
-   /* public String validateUser(String username, String password) {
-        // Simple role assignment for demonstration
-        if ("admin".equals(username) && "adminpass".equals(password)) {
-            return "admin";
-        } else if ("user".equals(username) && "userpass".equals(password)) {
-            return "user";
-        }
-        return null;
-    }*/
-
     public void showError(String message) {
         // Show error message in the login view
     }
