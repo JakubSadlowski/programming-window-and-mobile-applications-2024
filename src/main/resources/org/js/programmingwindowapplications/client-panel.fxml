@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.ClientController">
+    <top>
+        <Label text="Client Panel - Browse Animals" style="-fx-font-size: 20;" alignment="CENTER" />
+    </top>
+    <center>
+        <ListView fx:id="animalList" prefWidth="300" prefHeight="400" />
+    </center>
+    <bottom>
+        <VBox alignment="CENTER" spacing="10">
+            <Button text="Adopt Selected Animal" onAction="#handleAdoptAnimal" />
+            <Button text="Contact Shelter" onAction="#handleContactShelter" />
+        </VBox>
+    </bottom>
+</BorderPane>
+

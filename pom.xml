@@ -81,7 +81,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.js.programmingwindowapplications/org.js.programmingwindowapplications.HelloApplication
+                                org.js.programmingwindowapplications/org.js.programmingwindowapplications.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

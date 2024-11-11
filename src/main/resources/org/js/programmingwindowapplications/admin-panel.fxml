@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.AdminController">
+    <top>
+        <Label text="Admin Panel - Manage Animals" style="-fx-font-size: 20;" alignment="CENTER" />
+    </top>
+    <center>
+        <TableView fx:id="animalTable">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+                <TableColumn fx:id="typeColumn" text="Type" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Add Animal" onAction="#handleAddAnimal" />
+            <Button text="Edit Animal" onAction="#handleEditAnimal" />
+            <Button text="Delete Animal" onAction="#handleDeleteAnimal" />
+        </HBox>
+    </bottom>
+</BorderPane>
+
