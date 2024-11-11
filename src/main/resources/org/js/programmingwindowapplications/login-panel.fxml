@@ -24,7 +24,7 @@
             </Label>
             <TextField fx:id="usernameField" layoutX="269.0" layoutY="59.0" promptText="username" />
             <PasswordField fx:id="passwordField" layoutX="269.0" layoutY="119.0" promptText="password" />
-            <Label layoutX="285.0" layoutY="20.0" />
+            <Label fx:id="errorLabel" layoutX="269.0" layoutY="30.0" prefHeight="17.0" prefWidth="200.0" textFill="#ee0101" text="" />
             <Button fx:id="loginButton" layoutX="251.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0" prefWidth="68.0" style="-fx-background-color: #4A7C59; -fx-text-fill: #FFFFFF;" text="Log in" />
          </children></AnchorPane>
    </center>
