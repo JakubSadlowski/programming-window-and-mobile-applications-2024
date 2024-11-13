@@ -1,11 +1,8 @@
-package org.js.programmingwindowapplications;
+package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.event.ActionEvent;
 
 public class ClientController {
-    public void showClientView() {
-        // Display client view
-    }
 
     public void requestAdoption(int animalId) {
         // Handle adoption request

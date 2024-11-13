@@ -1,11 +1,8 @@
-package org.js.programmingwindowapplications;
+package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.event.ActionEvent;
 
 public class AdminController {
-    public void showAdminView() {
-        // Display admin view
-    }
 
     public void addAnimal(String name, String type) {
         // Logic to add a new animal

@@ -1,22 +1,17 @@
-package org.js.programmingwindowapplications;
+package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import org.js.programmingwindowapplications.Main;
 
 public class LoginController {
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Label errorLabel;
 
     private ShelterFacade shelterFacade;
     private Main mainApp;
@@ -30,32 +25,29 @@ public class LoginController {
     }
 
     @FXML
-    public void initialize() {
-        passwordField.setOnKeyPressed((KeyEvent event) -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                loginButton.fire();
-            }
-        });
-    }
-
-    @FXML
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        String role = shelterFacade.validateUser(username, password);
 
+        String role = shelterFacade.validateUser(username, password);
         try {
             if ("admin".equals(role)) {
                 mainApp.showAdminView();
             } else if ("user".equals(role)) {
                 mainApp.showClientView();
             } else {
-                errorLabel.setText("Invalid username or password.");
+                showAlert("Login Failed", "Invalid username or password.");
             }
         } catch (Exception e) {
-            errorLabel.setText("An error occurred. Please try again.");
+            e.printStackTrace();
         }
     }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
-
-

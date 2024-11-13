@@ -8,25 +8,29 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #8FB996;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.js.programmingwindowapplications.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #8FB996;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.js.programmingwindowapplications.animalshelterUI.LoginController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="514.0" style="-fx-background-color: #8FB996;" BorderPane.alignment="CENTER">
          <children>
+            <!-- Username and Password fields -->
             <Label layoutX="152.0" layoutY="53.0" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #8FB996;" text="Username" textFill="#FFFFFF">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
+            <TextField fx:id="usernameField" layoutX="269.0" layoutY="59.0" promptText="username" />
+
             <Label layoutX="152.0" layoutY="113.0" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #8FB996;" text="Password" textFill="#FFFFFF">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="269.0" layoutY="59.0" promptText="username" />
             <PasswordField fx:id="passwordField" layoutX="269.0" layoutY="119.0" promptText="password" />
-            <Label fx:id="errorLabel" layoutX="269.0" layoutY="30.0" prefHeight="17.0" prefWidth="200.0" textFill="#ee0101" text="" />
+
+            <!-- Login button -->
             <Button fx:id="loginButton" layoutX="251.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0" prefWidth="68.0" style="-fx-background-color: #4A7C59; -fx-text-fill: #FFFFFF;" text="Log in" />
-         </children></AnchorPane>
+         </children>
+      </AnchorPane>
    </center>
    <top>
       <Label prefHeight="39.0" prefWidth="344.0" style="-fx-background-color: #8FB996;" text="Animal Shelter Login Page" textFill="#FFFFFF" BorderPane.alignment="CENTER">

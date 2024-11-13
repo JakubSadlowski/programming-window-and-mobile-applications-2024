@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.AdminController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminController">
     <top>
         <Label text="Admin Panel - Manage Animals" style="-fx-font-size: 20;" alignment="CENTER" />
     </top>

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.ClientController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.ClientController">
     <top>
         <Label text="Client Panel - Browse Animals" style="-fx-font-size: 20;" alignment="CENTER" />
     </top>
