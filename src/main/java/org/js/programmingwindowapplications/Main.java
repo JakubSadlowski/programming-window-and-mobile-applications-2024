@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.AccountsManager;
+import org.js.programmingwindowapplications.animalshelterUI.AdminController;
 import org.js.programmingwindowapplications.animalshelterUI.LoginController;
 import org.js.programmingwindowapplications.animalshelterUI.ShelterFacade;
 
@@ -20,7 +22,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         AccountsManager accountsManager = new AccountsManager();
-        this.shelterFacade = new ShelterFacade(accountsManager);
+        ShelterManager shelterManager = new ShelterManager();
+        this.shelterFacade = new ShelterFacade(shelterManager, accountsManager);
         showLoginView();
     }
 
@@ -40,6 +43,11 @@ public class Main extends Application {
     public void showAdminView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-panel.fxml"));
         Scene scene = new Scene(loader.load());
+
+        AdminController controller = loader.getController();
+        controller.setShelterFacade(shelterFacade);
+        controller.setMainApp(this);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Admin Panel - Manage Animals");
     }

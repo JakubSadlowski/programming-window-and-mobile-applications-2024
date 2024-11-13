@@ -1,10 +1,17 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
+import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
+import org.js.programmingwindowapplications.animalshelter.ShelterManager;
+
+import java.util.Map;
+
 public class ShelterFacade {
     private final AccountsManager accountsManager;
+    private final ShelterManager shelterManager;
 
-    public ShelterFacade(AccountsManager accountsManager) {
+    public ShelterFacade(ShelterManager shelterManager, AccountsManager accountsManager) {
         this.accountsManager = accountsManager;
+        this.shelterManager = shelterManager;
     }
 
     public String validateUser(String username, String password) {
@@ -17,7 +24,9 @@ public class ShelterFacade {
         return null;
     }
 
-    public AccountsManager getAccountsManager() {
-        return accountsManager;
+    public Map<String, AnimalShelter> getShelters() {
+        return shelterManager.getShelters();
     }
+
+
 }

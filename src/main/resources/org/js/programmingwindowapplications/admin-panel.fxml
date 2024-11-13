@@ -2,26 +2,39 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminController">
     <top>
-        <Label text="Admin Panel - Manage Animals" style="-fx-font-size: 20;" alignment="CENTER" />
+        <Label text="Admin Panel - Manage Animals and Shelters" style="-fx-font-size: 20;" alignment="CENTER" />
     </top>
     <center>
-        <TableView fx:id="animalTable">
-            <columns>
-                <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
-                <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
-                <TableColumn fx:id="typeColumn" text="Type" prefWidth="150"/>
-            </columns>
-        </TableView>
+        <HBox spacing="20">
+            <!-- Left side: List of Shelters -->
+            <VBox>
+                <Label text="Shelters" style="-fx-font-size: 16;" />
+                <ListView fx:id="shelterListView" prefWidth="200" />
+            </VBox>
+            <!-- Right side: List of Animals -->
+            <VBox>
+                <Label text="Animals" style="-fx-font-size: 16;" />
+                <TableView fx:id="animalTable" prefWidth="500">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+                        <TableColumn fx:id="typeColumn" text="Type" prefWidth="150"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
     </center>
     <bottom>
         <HBox spacing="10" alignment="CENTER">
+            <TextField fx:id="nameField" promptText="Name" />
+            <TextField fx:id="typeField" promptText="Type" />
             <Button text="Add Animal" onAction="#handleAddAnimal" />
             <Button text="Edit Animal" onAction="#handleEditAnimal" />
             <Button text="Delete Animal" onAction="#handleDeleteAnimal" />
         </HBox>
     </bottom>
 </BorderPane>
-

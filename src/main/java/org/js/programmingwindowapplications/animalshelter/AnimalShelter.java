@@ -21,6 +21,10 @@ public class AnimalShelter {
         return animalList.size();
     }
 
+    public List<Animal> getAnimalList() {
+        return animalList;
+    }
+
     public int getMaxCapacity() {
         return maxCapacity;
     }
