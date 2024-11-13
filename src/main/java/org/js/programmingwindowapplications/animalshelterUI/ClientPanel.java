@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 
-public class ClientPanel {
+public class ClientPanel extends Panel{
 
     private AnimalShelter selectedShelter;
 
@@ -47,12 +47,4 @@ public class ClientPanel {
         showAlert("Adoption Request", "You have requested to adopt: " + animal.getName());
     }
 
-    // Show alert message
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

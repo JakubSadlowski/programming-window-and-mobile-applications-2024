@@ -9,7 +9,26 @@
         <Label text="Client Panel - Browse Animals" style="-fx-font-size: 20;" alignment="CENTER" />
     </top>
     <center>
-        <ListView fx:id="animalList" prefWidth="300" prefHeight="400" />
+        <HBox spacing="20">
+            <!-- Left side: List of Shelters -->
+            <VBox>
+                <Label text="Shelters" style="-fx-font-size: 16;" />
+                <ListView fx:id="shelterListView" prefWidth="200" />
+            </VBox>
+            <!-- Right side: List of Animals -->
+            <VBox>
+                <Label text="Animals" style="-fx-font-size: 16;" />
+                <TableView fx:id="animalTable" prefWidth="500">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+                        <TableColumn fx:id="speciesColumn" text="Species" prefWidth="150"/>
+                        <TableColumn fx:id="ageColumn" text="Age" prefWidth="50"/>
+                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+                        <TableColumn fx:id="conditionColumn" text="Condition" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
     </center>
     <bottom>
         <VBox alignment="CENTER" spacing="10">

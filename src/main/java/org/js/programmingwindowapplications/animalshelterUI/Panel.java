@@ -11,7 +11,6 @@ import javafx.scene.control.Alert.AlertType;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
-
 import java.util.Map;
 
 public class Panel {
@@ -35,10 +34,6 @@ public class Panel {
     private TableColumn<Animal, Double> priceColumn;
     @FXML
     private TableColumn<Animal, String> conditionColumn;
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField typeField;
 
     public void setShelterFacade(ShelterFacade shelterFacade) {
         this.shelterFacade = shelterFacade;
@@ -58,6 +53,9 @@ public class Panel {
             if (newValue != null) {
                 loadAnimals(newValue);
             }
+            else {
+                showAlert("Error", "Shelter list is empty");
+            }
         });
     }
 
@@ -73,7 +71,6 @@ public class Panel {
         priceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
         conditionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCondition().toString()));
     }
-
 
     protected void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.WARNING);

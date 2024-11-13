@@ -33,4 +33,6 @@ public class ShelterFacade {
     public List<Animal> getAnimals(String shelterName) {
         return shelterManager.getAnimalsFromShelter(shelterName);
     }
+
+
 }

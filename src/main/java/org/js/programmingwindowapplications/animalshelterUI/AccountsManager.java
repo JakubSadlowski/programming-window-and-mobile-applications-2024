@@ -13,7 +13,7 @@ public class AccountsManager {
 
     private void initializeDefaultAccounts() {
         accounts.add(new AdminAccount());
-        accounts.add(new ClientAccount("John", "Doe", "johndoe", "password123"));
+        accounts.add(new ClientAccount("Jakub", "Sadlowski", "sado", "sado"));
         accounts.add(new ClientAccount("Jane", "Smith", "janesmith", "mypassword"));
     }
 
