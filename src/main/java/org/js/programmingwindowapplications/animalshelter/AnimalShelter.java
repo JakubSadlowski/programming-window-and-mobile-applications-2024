@@ -145,4 +145,9 @@ public class AnimalShelter {
         }
         return Collections.max(animalList, Comparator.comparingDouble(Animal::getPrice));
     }
+
+    @Override
+    public String toString() {
+        return shelterName;
+    }
 }
