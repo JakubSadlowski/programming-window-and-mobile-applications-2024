@@ -21,7 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        AccountsManager accountsManager = new AccountsManager();
+        AccountsManager accountsManager = addAccounts();
         ShelterManager shelterManager = addShelters();
         this.shelterFacade = new ShelterFacade(shelterManager, accountsManager);
         showLoginView();
@@ -64,6 +64,15 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Client Panel - Browse Animals");
+    }
+
+    private AccountsManager addAccounts() {
+        AccountsManager accountsManager = new AccountsManager();
+
+        accountsManager.addAccount(new AdminAccount());
+        accountsManager.addAccount(new ClientAccount("Jakub", "Sadlowski", "sado", "sado"));
+
+        return accountsManager;
     }
 
     private ShelterManager addShelters() {
@@ -132,6 +141,4 @@ public class Main extends Application {
 
         return manager;
     }
-
-
 }

@@ -8,13 +8,10 @@ public class AccountsManager {
 
     public AccountsManager() {
         this.accounts = new ArrayList<>();
-        initializeDefaultAccounts();
     }
 
-    private void initializeDefaultAccounts() {
-        accounts.add(new AdminAccount());
-        accounts.add(new ClientAccount("Jakub", "Sadlowski", "sado", "sado"));
-        accounts.add(new ClientAccount("Jane", "Smith", "janesmith", "mypassword"));
+    public void addAccount(Account account) {
+        accounts.add(account);
     }
 
     public Account findAccount(String username, String password) {
