@@ -10,11 +10,10 @@ import javafx.scene.control.TableView;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
-import org.js.programmingwindowapplications.animalshelterUI.ShelterFacade;
 
 import java.util.Map;
 
-public class ShelterController {
+public class Panel {
 
     protected AnimalShelter selectedShelter;
     protected ObservableList<Animal> animalData = FXCollections.observableArrayList();
@@ -62,5 +61,4 @@ public class ShelterController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

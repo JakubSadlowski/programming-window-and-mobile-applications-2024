@@ -8,7 +8,7 @@ import javafx.scene.control.ListView;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 
-public class ClientController {
+public class ClientPanel {
 
     private AnimalShelter selectedShelter;
 

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminPanel">
     <top>
         <Label text="Admin Panel - Manage Animals and Shelters" style="-fx-font-size: 20;" alignment="CENTER" />
     </top>

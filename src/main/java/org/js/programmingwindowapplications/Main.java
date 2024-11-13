@@ -9,8 +9,8 @@ import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.AccountsManager;
-import org.js.programmingwindowapplications.animalshelterUI.AdminController;
-import org.js.programmingwindowapplications.animalshelterUI.LoginController;
+import org.js.programmingwindowapplications.animalshelterUI.AdminPanel;
+import org.js.programmingwindowapplications.animalshelterUI.LoginPanel;
 import org.js.programmingwindowapplications.animalshelterUI.ShelterFacade;
 
 public class Main extends Application {
@@ -34,7 +34,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-panel.fxml"));
         Scene scene = new Scene(loader.load());
 
-        LoginController controller = loader.getController();
+        LoginPanel controller = loader.getController();
         controller.setShelterFacade(shelterFacade);
         controller.setMainApp(this);
 
@@ -47,7 +47,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-panel.fxml"));
         Scene scene = new Scene(loader.load());
 
-        AdminController controller = loader.getController();
+        AdminPanel controller = loader.getController();
         controller.setShelterFacade(shelterFacade);
         controller.setMainApp(this);
         controller.loadShelters();

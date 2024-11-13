@@ -1,12 +1,10 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.js.programmingwindowapplications.animalshelter.Animal;
-import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 
-public class AdminController extends ShelterController {
+public class AdminPanel extends Panel {
 
     @FXML
     private TextField nameField;

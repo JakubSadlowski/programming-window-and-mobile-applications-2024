@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import org.js.programmingwindowapplications.Main;
 
-public class LoginController {
+public class LoginPanel {
     @FXML
     private TextField usernameField;
     @FXML
