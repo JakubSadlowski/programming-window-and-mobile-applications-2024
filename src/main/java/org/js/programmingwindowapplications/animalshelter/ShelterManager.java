@@ -20,6 +20,10 @@ public class ShelterManager {
         return shelters;
     }
 
+    public List<Animal> getAnimalsFromShelter(String shelterName) {
+        return shelters.get(shelterName).getAnimalList();
+    }
+
     public boolean addShelter(String name, int capacity) {
         if (shelters.containsKey(name)) {
             System.out.println("Shelter with name " + name + " already exists.");

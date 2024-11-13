@@ -44,13 +44,13 @@ public class AdminPanel extends Panel {
 
 
     public void handleDeleteAnimal() {
-        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+        /*Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
         if (selectedAnimal != null) {
             selectedShelter.removeAnimal(selectedAnimal);
             loadAnimals(selectedShelter);
         } else {
             showAlert("Selection Error", "Please select an animal to delete.");
-        }
+        }*/
     }
 
 

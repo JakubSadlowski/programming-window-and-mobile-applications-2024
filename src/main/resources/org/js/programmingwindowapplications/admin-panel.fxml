@@ -20,9 +20,11 @@
                 <Label text="Animals" style="-fx-font-size: 16;" />
                 <TableView fx:id="animalTable" prefWidth="500">
                     <columns>
-                        <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
                         <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
-                        <TableColumn fx:id="typeColumn" text="Type" prefWidth="150"/>
+                        <TableColumn fx:id="speciesColumn" text="Species" prefWidth="150"/>
+                        <TableColumn fx:id="ageColumn" text="Age" prefWidth="50"/>
+                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
+                        <TableColumn fx:id="conditionColumn" text="Condition" prefWidth="100"/>
                     </columns>
                 </TableView>
             </VBox>
@@ -31,7 +33,7 @@
     <bottom>
         <HBox spacing="10" alignment="CENTER">
             <TextField fx:id="nameField" promptText="Name" />
-            <TextField fx:id="typeField" promptText="Type" />
+            <TextField fx:id="typeField" promptText="Species" />
             <Button text="Add Animal" onAction="#handleAddAnimal" />
             <Button text="Edit Animal" onAction="#handleEditAnimal" />
             <Button text="Delete Animal" onAction="#handleDeleteAnimal" />

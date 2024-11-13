@@ -1,8 +1,10 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
+import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 
+import java.util.List;
 import java.util.Map;
 
 public class ShelterFacade {
@@ -28,5 +30,7 @@ public class ShelterFacade {
         return shelterManager.getShelters();
     }
 
-
+    public List<Animal> getAnimals(String shelterName) {
+        return shelterManager.getAnimalsFromShelter(shelterName);
+    }
 }

@@ -1,12 +1,13 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
@@ -14,7 +15,6 @@ import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import java.util.Map;
 
 public class Panel {
-
     protected AnimalShelter selectedShelter;
     protected ObservableList<Animal> animalData = FXCollections.observableArrayList();
     protected ObservableList<AnimalShelter> shelterData = FXCollections.observableArrayList();
@@ -25,6 +25,20 @@ public class Panel {
     protected ListView<AnimalShelter> shelterListView;
     @FXML
     protected TableView<Animal> animalTable;
+    @FXML
+    private TableColumn<Animal, String> nameColumn;
+    @FXML
+    private TableColumn<Animal, String> speciesColumn;
+    @FXML
+    private TableColumn<Animal, Integer> ageColumn;
+    @FXML
+    private TableColumn<Animal, Double> priceColumn;
+    @FXML
+    private TableColumn<Animal, String> conditionColumn;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField typeField;
 
     public void setShelterFacade(ShelterFacade shelterFacade) {
         this.shelterFacade = shelterFacade;
@@ -47,12 +61,19 @@ public class Panel {
         });
     }
 
-    public void loadAnimals(AnimalShelter shelter) {
+    private void loadAnimals(AnimalShelter shelter) {
         selectedShelter = shelter;
         animalData.clear();
-        animalData.addAll(shelter.getAnimalList());
+        animalData.addAll(shelterFacade.getAnimals(shelter.getShelterName()));
         animalTable.setItems(animalData);
+
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        speciesColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSpecies()));
+        ageColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAge()).asObject());
+        priceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        conditionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCondition().toString()));
     }
+
 
     protected void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.WARNING);
