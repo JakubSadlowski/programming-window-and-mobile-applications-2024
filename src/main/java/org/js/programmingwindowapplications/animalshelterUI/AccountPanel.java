@@ -13,7 +13,7 @@ import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import java.util.Map;
 
-public class Panel {
+public class AccountPanel {
     protected AnimalShelter selectedShelter;
     protected ObservableList<Animal> animalData = FXCollections.observableArrayList();
     protected ObservableList<AnimalShelter> shelterData = FXCollections.observableArrayList();
@@ -59,7 +59,7 @@ public class Panel {
         });
     }
 
-    private void loadAnimals(AnimalShelter shelter) {
+    public void loadAnimals(AnimalShelter shelter) {
         selectedShelter = shelter;
         animalData.clear();
         animalData.addAll(shelterFacade.getAnimals(shelter.getShelterName()));
@@ -70,6 +70,10 @@ public class Panel {
         ageColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAge()).asObject());
         priceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
         conditionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCondition().toString()));
+    }
+
+    protected void logout() {
+
     }
 
     protected void showAlert(String title, String message) {

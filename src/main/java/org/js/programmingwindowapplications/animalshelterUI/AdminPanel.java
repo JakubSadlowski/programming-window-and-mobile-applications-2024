@@ -1,18 +1,23 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 
-public class AdminPanel extends Panel {
+import java.util.Optional;
+
+public class AdminPanel extends AccountPanel {
 
     @FXML
     private TextField nameField;
     @FXML
     private TextField typeField;
 
-
-    public void handleAddAnimal() {
+    @FXML
+    private void handleAddAnimal() {
         /*String name = nameField.getText();
         String type = typeField.getText();
         if (name.isEmpty() || type.isEmpty()) {
@@ -24,8 +29,8 @@ public class AdminPanel extends Panel {
         }*/
     }
 
-
-    public void handleEditAnimal() {
+    @FXML
+    private void handleEditAnimal() {
         /*Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
         if (selectedAnimal != null) {
             String newName = nameField.getText();
@@ -42,24 +47,26 @@ public class AdminPanel extends Panel {
         }*/
     }
 
-
-    public void handleDeleteAnimal() {
-        /*Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+    @FXML
+    private void handleDeleteAnimal() {
+        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
         if (selectedAnimal != null) {
-            selectedShelter.removeAnimal(selectedAnimal);
-            loadAnimals(selectedShelter);
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Delete Confirmation");
+            confirmationAlert.setHeaderText("Are you sure you want to delete this animal?");
+            confirmationAlert.setContentText("Animal: " + selectedAnimal.getName());
+
+            ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            confirmationAlert.getButtonTypes().setAll(yesButton, noButton);
+
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+            if (result.isPresent() && result.get() == yesButton) {
+                selectedShelter.removeAnimal(selectedAnimal);
+                loadAnimals(selectedShelter);
+            }
         } else {
             showAlert("Selection Error", "Please select an animal to delete.");
-        }*/
-    }
-
-
-    public void handleAdoptAnimal() {
-
-    }
-
-
-    public void handleContactShelter() {
-
+        }
     }
 }
