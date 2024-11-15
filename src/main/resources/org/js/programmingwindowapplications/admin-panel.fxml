@@ -32,8 +32,7 @@
     </center>
     <bottom>
         <HBox spacing="10" alignment="CENTER">
-            <TextField fx:id="nameField" promptText="Name" />
-            <TextField fx:id="typeField" promptText="Species" />
+            <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: red; -fx-text-fill: white;" />
             <Button text="Add Animal" onAction="#handleAddAnimal" />
             <Button text="Edit Animal" onAction="#handleEditAnimal" />
             <Button text="Delete Animal" onAction="#handleDeleteAnimal" />

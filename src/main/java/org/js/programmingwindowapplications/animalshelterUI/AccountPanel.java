@@ -72,9 +72,20 @@ public class AccountPanel {
         conditionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCondition().toString()));
     }
 
-    protected void logout() {
-
+    @FXML
+    protected void handleLogout() {
+        try {
+            if (mainApp != null) {
+                mainApp.showLoginView();
+            } else {
+                showAlert("Error", "Main application context not set.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Logout Error", "An error occurred while trying to log out. Please try again.");
+        }
     }
+
 
     protected void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.WARNING);

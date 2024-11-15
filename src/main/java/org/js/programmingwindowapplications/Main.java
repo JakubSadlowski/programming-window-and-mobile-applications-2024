@@ -27,7 +27,7 @@ public class Main extends Application {
         showLoginView();
     }
 
-    private void showLoginView() throws Exception {
+    public void showLoginView() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-panel.fxml"));
         Scene scene = new Scene(loader.load());
 

@@ -1,9 +1,9 @@
 package org.js.programmingwindowapplications.animalshelter;
 
 public class Animal implements Comparable<Animal>{
-    private final String name;
-    private final String species;
-    private final double price;
+    private String name;
+    private String species;
+    private double price;
     private AnimalCondition condition;
     private int age;
 
@@ -19,8 +19,16 @@ public class Animal implements Comparable<Animal>{
         return name;
     }
 
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
     public String getSpecies() {
         return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public AnimalCondition getCondition() {
@@ -41,6 +49,10 @@ public class Animal implements Comparable<Animal>{
 
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
