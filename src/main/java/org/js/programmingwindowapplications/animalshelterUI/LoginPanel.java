@@ -1,10 +1,13 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import org.js.programmingwindowapplications.Main;
 
 public class LoginPanel {
@@ -14,14 +17,14 @@ public class LoginPanel {
     private PasswordField passwordField;
 
     private ShelterFacade shelterFacade;
-    private Main mainApp;
+    private Stage primaryStage;
 
     public void setShelterFacade(ShelterFacade shelterFacade) {
         this.shelterFacade = shelterFacade;
     }
 
-    public void setMainApp(Main mainApp) {
-        this.mainApp = mainApp;
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     @FXML
@@ -32,15 +35,42 @@ public class LoginPanel {
         String role = shelterFacade.validateUser(username, password);
         try {
             if ("admin".equals(role)) {
-                mainApp.showAdminView();
+                showAdminView();
             } else if ("user".equals(role)) {
-                mainApp.showClientView();
+                showClientView();
             } else {
                 showAlert("Login Failed", "Invalid username or password.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "An unexpected error occurred.");
         }
+    }
+
+    private void showAdminView() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-panel.fxml"));
+        Scene adminScene = new Scene(loader.load());
+
+        AdminPanel adminController = loader.getController();
+        adminController.setShelterFacade(shelterFacade);
+        adminController.setMainApp(Main.getInstance());
+        adminController.loadShelters();
+
+        primaryStage.setScene(adminScene);
+        primaryStage.setTitle("Admin Panel - Manage Animals");
+    }
+
+    private void showClientView() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("client-panel.fxml"));
+        Scene clientScene = new Scene(loader.load());
+
+        ClientPanel clientController = loader.getController();
+        clientController.setShelterFacade(shelterFacade);
+        clientController.setMainApp(Main.getInstance());
+        clientController.loadShelters();
+
+        primaryStage.setScene(clientScene);
+        primaryStage.setTitle("Client Panel - Browse Animals");
     }
 
     private void showAlert(String title, String message) {
@@ -51,3 +81,4 @@ public class LoginPanel {
         alert.showAndWait();
     }
 }
+

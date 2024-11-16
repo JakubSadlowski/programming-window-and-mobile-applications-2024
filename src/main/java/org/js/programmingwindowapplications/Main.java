@@ -13,6 +13,7 @@ import org.js.programmingwindowapplications.animalshelterUI.*;
 public class Main extends Application {
     private Stage primaryStage;
     private ShelterFacade shelterFacade;
+    private static Main instance;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,6 +21,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        instance = this;
         this.primaryStage = primaryStage;
         AccountsManager accountsManager = addAccounts();
         ShelterManager shelterManager = addShelters();
@@ -33,37 +35,15 @@ public class Main extends Application {
 
         LoginPanel controller = loader.getController();
         controller.setShelterFacade(shelterFacade);
-        controller.setMainApp(this);
+        controller.setPrimaryStage(primaryStage);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Animal Shelter Login");
         primaryStage.show();
     }
 
-    public void showAdminView() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-panel.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        AdminPanel controller = loader.getController();
-        controller.setShelterFacade(shelterFacade);
-        controller.setMainApp(this);
-        controller.loadShelters();
-
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Admin Panel - Manage Animals");
-    }
-
-    public void showClientView() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("client-panel.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        ClientPanel controller = loader.getController();
-        controller.setShelterFacade(shelterFacade);
-        controller.setMainApp(this);
-        controller.loadShelters();
-
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Client Panel - Browse Animals");
+    public static Main getInstance() {
+        return instance;
     }
 
     private AccountsManager addAccounts() {
