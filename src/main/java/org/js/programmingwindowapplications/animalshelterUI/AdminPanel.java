@@ -11,32 +11,54 @@ import java.util.Optional;
 public class AdminPanel extends AccountPanel {
 
     @FXML
-    private TextField nameField;
+    private TextField animalNameField;
     @FXML
-    private TextField speciesField;
+    private TextField animalSpeciesField;
     @FXML
-    private TextField ageField;
+    private TextField animalAgeField;
     @FXML
-    private TextField priceField;
+    private TextField animalPriceField;
+    @FXML
+    private TextField shelterNameField;
+    @FXML
+    private TextField shelterMaxCapacityField;
     private GridPane grid;
+    private Dialog<Void> dialog;
 
     @FXML
-    private void handleAddAnimal() {
-        showAddAnimalDialog();
+    private void handleAdd() {
+        Alert choiceDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        choiceDialog.setTitle("Add Option");
+        choiceDialog.setHeaderText("Choose an option");
+        choiceDialog.setContentText("Would you like to add an animal or a shelter?");
+
+        ButtonType addAnimalButton = new ButtonType("Add Animal");
+        ButtonType addShelterButton = new ButtonType("Add Shelter");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        choiceDialog.getButtonTypes().setAll(addAnimalButton, addShelterButton, cancelButton);
+
+        choiceDialog.showAndWait().ifPresent(choice -> {
+            if (choice == addAnimalButton) {
+                showAddAnimalDialog();
+            } else if (choice == addShelterButton) {
+                showAddShelterDialog();
+            }
+        });
     }
 
     private void showAddAnimalDialog() {
-        Dialog<Animal> dialog = new Dialog<>();
+        dialog = new Dialog<>();
         dialog.setTitle("Add Animal");
         dialog.setHeaderText("Add a new animal");
 
         ButtonType saveButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-        nameField = new TextField();
-        speciesField = new TextField();
-        ageField = new TextField();
-        priceField = new TextField();
+        animalNameField = new TextField();
+        animalSpeciesField = new TextField();
+        animalAgeField = new TextField();
+        animalPriceField = new TextField();
         ComboBox<AnimalCondition> conditionComboBox = new ComboBox<>();
         conditionComboBox.getItems().addAll(AnimalCondition.values());
 
@@ -47,17 +69,30 @@ public class AdminPanel extends AccountPanel {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    String name = nameField.getText();
-                    String species = speciesField.getText();
-                    int age = Integer.parseInt(ageField.getText());
-                    double price = Double.parseDouble(priceField.getText());
+                    String name = animalNameField.getText();
+                    String species = animalSpeciesField.getText();
+                    int age = Integer.parseInt(animalAgeField.getText());
+                    double price = Double.parseDouble(animalPriceField.getText());
                     AnimalCondition condition = conditionComboBox.getValue();
 
                     if (name.isEmpty() || species.isEmpty() || condition == null) {
                         showAlert("Input Error", "Please fill out all fields.");
                         return null;
                     }
-                    return new Animal(name, species, condition, age, price);
+
+                    if (selectedShelter != null) {
+                        shelterFacade.addAnimal(
+                                selectedShelter.getShelterName(),
+                                name,
+                                species,
+                                condition,
+                                age,
+                                price
+                        );
+                        loadAnimals(selectedShelter);
+                    } else {
+                        showAlert("Error", "Please select a shelter first.");
+                    }
                 } catch (NumberFormatException e) {
                     showAlert("Input Error", "Please enter valid numbers for age and price.");
                 }
@@ -65,25 +100,83 @@ public class AdminPanel extends AccountPanel {
             return null;
         });
 
-        dialog.showAndWait().ifPresent(newAnimal -> {
-            if (selectedShelter != null) {
-                selectedShelter.addAnimal(newAnimal);
-                loadAnimals(selectedShelter);
-            } else {
-                showAlert("Error", "Please select a shelter first.");
-            }
-        });
+        dialog.showAndWait();
     }
 
-    @FXML
-    private void handleEditAnimal() {
-        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+    private void showAddShelterDialog() {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Add Shelter");
+        dialog.setHeaderText("Add a new shelter");
 
-        if (selectedAnimal != null) {
-            showEditAnimalDialog(selectedAnimal);
-        } else {
-            showAlert("Selection Error", "Please select an animal to edit.");
-        }
+        ButtonType saveButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        shelterNameField = new TextField();
+        shelterMaxCapacityField = new TextField();
+
+        createShelterGrid();
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                try {
+                    String name = shelterNameField.getText();
+                    int maxCapacity = Integer.parseInt(shelterMaxCapacityField.getText());
+
+                    if (name.isEmpty()) {
+                        showAlert("Input Error", "Shelter name cannot be empty.");
+                        return null;
+                    }
+                    if (maxCapacity <= 0) {
+                        showAlert("Input Error", "Max capacity must be a positive number.");
+                        return null;
+                    }
+
+                    shelterFacade.addShelter(name, maxCapacity);
+                    loadShelters();
+                } catch (NumberFormatException e) {
+                    showAlert("Input Error", "Please enter a valid number for max capacity.");
+                }
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    private void createShelterGrid() {
+        grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(new Label("Shelter Name:"), 0, 0);
+        grid.add(shelterNameField, 1, 0);
+        grid.add(new Label("Max Capacity:"), 0, 1);
+        grid.add(shelterMaxCapacityField, 1, 1);
+    }
+
+
+    @FXML
+    private void handleEdit() {
+        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+        Alert choiceDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        choiceDialog.setTitle("Edit Option");
+        choiceDialog.setHeaderText("Choose an option");
+        choiceDialog.setContentText("Would you like to edit an animal or a shelter?");
+
+        ButtonType editAnimalButton = new ButtonType("Edit Animal");
+        ButtonType editShelterButton = new ButtonType("Edit Shelter");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        choiceDialog.getButtonTypes().setAll(editAnimalButton, editShelterButton, cancelButton);
+
+        choiceDialog.showAndWait().ifPresent(choice -> {
+            if (choice == editAnimalButton) {
+                showEditAnimalDialog(selectedAnimal);
+            } else if (choice == editShelterButton) {
+                showEditShelterDialog();
+            }
+        });
     }
 
     private void showEditAnimalDialog(Animal animal) {
@@ -94,10 +187,10 @@ public class AdminPanel extends AccountPanel {
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-        nameField = new TextField(animal.getName());
-        speciesField = new TextField(animal.getSpecies());
-        ageField = new TextField(String.valueOf(animal.getAge()));
-        priceField = new TextField(String.valueOf(animal.getPrice()));
+        animalNameField = new TextField(animal.getName());
+        animalSpeciesField = new TextField(animal.getSpecies());
+        animalAgeField = new TextField(String.valueOf(animal.getAge()));
+        animalPriceField = new TextField(String.valueOf(animal.getPrice()));
         ComboBox<AnimalCondition> conditionComboBox = new ComboBox<>();
         conditionComboBox.getItems().addAll(AnimalCondition.values());
         conditionComboBox.setValue(animal.getCondition());
@@ -109,10 +202,10 @@ public class AdminPanel extends AccountPanel {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    animal.setName(nameField.getText());
-                    animal.setSpecies(speciesField.getText());
-                    animal.setAge(Integer.parseInt(ageField.getText()));
-                    animal.setPrice(Double.parseDouble(priceField.getText()));
+                    animal.setName(animalNameField.getText());
+                    animal.setSpecies(animalSpeciesField.getText());
+                    animal.setAge(Integer.parseInt(animalAgeField.getText()));
+                    animal.setPrice(Double.parseDouble(animalPriceField.getText()));
                     animal.setCondition(conditionComboBox.getValue());
                 } catch (NumberFormatException e) {
                     showAlert("Input Error", "Please enter valid numbers for age and price.");
@@ -126,18 +219,75 @@ public class AdminPanel extends AccountPanel {
         dialog.showAndWait().ifPresent(updatedAnimal -> loadAnimals(selectedShelter));
     }
 
+    private void showEditShelterDialog() {
+        if (selectedShelter != null) {
+            Dialog<Void> dialog = new Dialog<>();
+            dialog.setTitle("Edit Shelter");
+            dialog.setHeaderText("Edit details for: " + selectedShelter.getShelterName());
+
+            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+            shelterNameField = new TextField(selectedShelter.getShelterName());
+            shelterMaxCapacityField = new TextField(String.valueOf(selectedShelter.getMaxCapacity()));
+
+            createShelterGrid();
+
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == saveButtonType) {
+                    try {
+                        String newName = shelterNameField.getText().trim();
+                        int newCapacity = Integer.parseInt(shelterMaxCapacityField.getText().trim());
+
+                        if (newName.isEmpty()) {
+                            showAlert("Input Error", "Shelter name cannot be empty.");
+                            return null;
+                        }
+                        if (newCapacity <= 0) {
+                            showAlert("Input Error", "Max capacity must be a positive number.");
+                            return null;
+                        }
+
+                        // If the shelter name is changed, update shelterFacade
+                        String oldName = selectedShelter.getShelterName();
+                        if (!newName.equals(oldName)) {
+                            shelterFacade.modifyShelter(oldName, newName); // Ensure this method exists in shelterFacade
+                        }
+
+                        // Update other properties
+                        selectedShelter.setShelterName(newName);
+                        selectedShelter.setMaxCapacity(newCapacity);
+
+                        loadShelters(); // Reload shelters to reflect updated name
+                    } catch (NumberFormatException e) {
+                        showAlert("Input Error", "Please enter a valid number for max capacity.");
+                    }
+                }
+                return null;
+            });
+
+            dialog.showAndWait();
+        } else {
+            showAlert("Selection Error", "Please select a shelter to edit.");
+        }
+    }
+
+
+
     private void createAnimalGrid(ComboBox<AnimalCondition> conditionComboBox) {
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.add(new Label("Name:"), 0, 0);
-        grid.add(nameField, 1, 0);
+        grid.add(animalNameField, 1, 0);
         grid.add(new Label("Species:"), 0, 1);
-        grid.add(speciesField, 1, 1);
+        grid.add(animalSpeciesField, 1, 1);
         grid.add(new Label("Age:"), 0, 2);
-        grid.add(ageField, 1, 2);
+        grid.add(animalAgeField, 1, 2);
         grid.add(new Label("Price:"), 0, 3);
-        grid.add(priceField, 1, 3);
+        grid.add(animalPriceField, 1, 3);
         grid.add(new Label("Condition:"), 0, 4);
         grid.add(conditionComboBox, 1, 4);
     }

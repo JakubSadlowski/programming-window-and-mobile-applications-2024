@@ -33,8 +33,8 @@
     <bottom>
         <HBox spacing="10" alignment="CENTER">
             <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: red; -fx-text-fill: white;" />
-            <Button text="Add Animal" onAction="#handleAddAnimal" />
-            <Button text="Edit Animal" onAction="#handleEditAnimal" />
+            <Button text="Add" onAction="#handleAdd" />
+            <Button text="Edit" onAction="#handleEdit" />
             <Button text="Delete Animal" onAction="#handleDeleteAnimal" />
         </HBox>
     </bottom>

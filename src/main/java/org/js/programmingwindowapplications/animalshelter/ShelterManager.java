@@ -33,6 +33,16 @@ public class ShelterManager {
         return true;
     }
 
+    public void addAnimal(String shelterName, String name, String species, AnimalCondition condition, int age, double price) {
+        AnimalShelter shelter = shelters.get(shelterName);
+        if (shelter != null) {
+            Animal newAnimal = new Animal(name, species, condition, age, price);
+            shelter.addAnimal(newAnimal);
+        } else {
+            throw new IllegalArgumentException("Shelter not found: " + shelterName);
+        }
+    }
+
     public AnimalShelter removeShelter(String name) {
         if (!shelters.containsKey(name)) {
             System.out.println("Shelter with name " + name + " does not exist.");

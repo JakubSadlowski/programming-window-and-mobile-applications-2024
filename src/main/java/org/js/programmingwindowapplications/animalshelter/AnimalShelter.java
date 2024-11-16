@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnimalShelter {
-    private final String shelterName;
+    private String shelterName;
     private final List<Animal> animalList;
-    private final int maxCapacity;
+    private int maxCapacity;
 
     public AnimalShelter(String shelterName, int maxCapacity) {
         this.shelterName = shelterName;
@@ -31,6 +31,14 @@ public class AnimalShelter {
 
     public String getShelterName() {
         return shelterName;
+    }
+
+    public void setShelterName(String shelterName) {
+        this.shelterName = shelterName;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 
     public Animal getAnimalFromShelter(Animal animal) {

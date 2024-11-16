@@ -3,6 +3,7 @@ package org.js.programmingwindowapplications.animalshelterUI;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,15 +49,18 @@ public class AccountPanel {
         Map<String, AnimalShelter> sheltersMap = shelterFacade.getShelters();
         shelterData.addAll(sheltersMap.values());
         shelterListView.setItems(shelterData);
+        shelterListView.getSelectionModel().selectedItemProperty().removeListener(this::handleShelterSelectionChange);
+        shelterListView.getSelectionModel().selectedItemProperty().addListener(this::handleShelterSelectionChange);
 
-        shelterListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                loadAnimals(newValue);
-            }
-            else {
-                showAlert("Error", "Shelter list is empty");
-            }
-        });
+        if (selectedShelter != null && shelterData.contains(selectedShelter)) {
+            shelterListView.getSelectionModel().select(selectedShelter);
+        }
+    }
+
+    private void handleShelterSelectionChange(ObservableValue<? extends AnimalShelter> observable, AnimalShelter oldValue, AnimalShelter newValue) {
+        if (newValue != null) {
+            loadAnimals(newValue);
+        }
     }
 
     public void loadAnimals(AnimalShelter shelter) {

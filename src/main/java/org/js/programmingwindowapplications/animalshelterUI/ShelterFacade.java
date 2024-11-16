@@ -1,6 +1,7 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
 import org.js.programmingwindowapplications.animalshelter.Animal;
+import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 
@@ -32,6 +33,27 @@ public class ShelterFacade {
 
     public List<Animal> getAnimals(String shelterName) {
         return shelterManager.getAnimalsFromShelter(shelterName);
+    }
+
+    public void addAnimal(String shelterName, String name, String species, AnimalCondition condition, int age, double price) {
+        shelterManager.addAnimal(shelterName, name, species, condition, age, price);
+    }
+
+    public void addShelter(String name, int maxCapacity) {
+        shelterManager.addShelter(name, maxCapacity);
+    }
+
+    public void modifyShelter(String oldName, String newName) {
+        if (!shelterManager.getShelters().containsKey(oldName)) {
+            throw new IllegalArgumentException("Shelter with the name " + oldName + " does not exist.");
+        }
+        if (shelterManager.getShelters().containsKey(newName)) {
+            throw new IllegalArgumentException("A shelter with the name " + newName + " already exists.");
+        }
+
+        AnimalShelter shelter = shelterManager.getShelters().remove(oldName);
+        shelter.setShelterName(newName);
+        shelterManager.getShelters().put(newName, shelter);
     }
 
 
