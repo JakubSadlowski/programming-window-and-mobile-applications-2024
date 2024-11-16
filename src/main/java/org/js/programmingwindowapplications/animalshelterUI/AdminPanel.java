@@ -250,17 +250,15 @@ public class AdminPanel extends AccountPanel {
                             return null;
                         }
 
-                        // If the shelter name is changed, update shelterFacade
                         String oldName = selectedShelter.getShelterName();
                         if (!newName.equals(oldName)) {
-                            shelterFacade.modifyShelter(oldName, newName); // Ensure this method exists in shelterFacade
+                            shelterFacade.modifyShelter(oldName, newName);
                         }
 
-                        // Update other properties
                         selectedShelter.setShelterName(newName);
                         selectedShelter.setMaxCapacity(newCapacity);
 
-                        loadShelters(); // Reload shelters to reflect updated name
+                        loadShelters();
                     } catch (NumberFormatException e) {
                         showAlert("Input Error", "Please enter a valid number for max capacity.");
                     }
@@ -273,8 +271,6 @@ public class AdminPanel extends AccountPanel {
             showAlert("Selection Error", "Please select a shelter to edit.");
         }
     }
-
-
 
     private void createAnimalGrid(ComboBox<AnimalCondition> conditionComboBox) {
         grid = new GridPane();
@@ -293,6 +289,27 @@ public class AdminPanel extends AccountPanel {
     }
 
     @FXML
+    private void handleDelete() {
+        Alert choiceDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        choiceDialog.setTitle("Delete Option");
+        choiceDialog.setHeaderText("Choose an option");
+        choiceDialog.setContentText("Would you like to delete an animal or a shelter?");
+
+        ButtonType deleteAnimalButton = new ButtonType("Delete Animal");
+        ButtonType deleteShelterButton = new ButtonType("Delete Shelter");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        choiceDialog.getButtonTypes().setAll(deleteAnimalButton, deleteShelterButton, cancelButton);
+
+        choiceDialog.showAndWait().ifPresent(choice -> {
+            if (choice == deleteAnimalButton) {
+                handleDeleteAnimal();
+            } else if (choice == deleteShelterButton) {
+                handleDeleteShelter();
+            }
+        });
+    }
+
     private void handleDeleteAnimal() {
         Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
@@ -313,6 +330,28 @@ public class AdminPanel extends AccountPanel {
             }
         } else {
             showAlert("Selection Error", "Please select an animal to delete.");
+        }
+    }
+
+    private void handleDeleteShelter() {
+        if (selectedShelter != null) {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("Delete Confirmation");
+            confirmationAlert.setHeaderText("Are you sure you want to delete this shelter?");
+            confirmationAlert.setContentText("Shelter: " + selectedShelter.getShelterName());
+
+            ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            confirmationAlert.getButtonTypes().setAll(yesButton, noButton);
+
+            confirmationAlert.showAndWait().ifPresent(response -> {
+                if (response == yesButton) {
+                    shelterFacade.removeShelter(selectedShelter.getShelterName());
+                    loadShelters();
+                }
+            });
+        } else {
+            showAlert("Selection Error", "Please select a shelter to delete.");
         }
     }
 }

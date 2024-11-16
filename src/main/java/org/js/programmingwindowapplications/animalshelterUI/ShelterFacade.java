@@ -56,5 +56,7 @@ public class ShelterFacade {
         shelterManager.getShelters().put(newName, shelter);
     }
 
-
+    public void removeShelter(String shelterName) {
+        shelterManager.removeShelter(shelterName);
+    }
 }
