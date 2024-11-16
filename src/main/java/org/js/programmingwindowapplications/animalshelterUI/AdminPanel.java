@@ -23,7 +23,6 @@ public class AdminPanel extends AccountPanel {
     @FXML
     private TextField shelterMaxCapacityField;
     private GridPane grid;
-    private Dialog<Void> dialog;
 
     @FXML
     private void handleAdd() {
@@ -48,7 +47,7 @@ public class AdminPanel extends AccountPanel {
     }
 
     private void showAddAnimalDialog() {
-        dialog = new Dialog<>();
+        Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Add Animal");
         dialog.setHeaderText("Add a new animal");
 
@@ -158,7 +157,7 @@ public class AdminPanel extends AccountPanel {
 
     @FXML
     private void handleEdit() {
-        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+        selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
         Alert choiceDialog = new Alert(Alert.AlertType.CONFIRMATION);
         choiceDialog.setTitle("Edit Option");
         choiceDialog.setHeaderText("Choose an option");
@@ -202,22 +201,38 @@ public class AdminPanel extends AccountPanel {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    animal.setName(animalNameField.getText());
-                    animal.setSpecies(animalSpeciesField.getText());
-                    animal.setAge(Integer.parseInt(animalAgeField.getText()));
-                    animal.setPrice(Double.parseDouble(animalPriceField.getText()));
-                    animal.setCondition(conditionComboBox.getValue());
+                    String newName = animalNameField.getText();
+                    String newSpecies = animalSpeciesField.getText();
+                    int newAge = Integer.parseInt(animalAgeField.getText());
+                    double newPrice = Double.parseDouble(animalPriceField.getText());
+                    AnimalCondition newCondition = conditionComboBox.getValue();
+
+                    if (newName.isEmpty() || newSpecies.isEmpty()) {
+                        showAlert("Input Error", "Name and species cannot be empty.");
+                        return null;
+                    }
+
+                    shelterFacade.modifyAnimal(
+                            selectedShelter.getShelterName(),
+                            animal.getName(),
+                            newName,
+                            newSpecies,
+                            newCondition,
+                            newAge,
+                            newPrice
+                    );
+
+                    return animal;
                 } catch (NumberFormatException e) {
                     showAlert("Input Error", "Please enter valid numbers for age and price.");
-                    return null;
                 }
-                return animal;
             }
             return null;
         });
 
         dialog.showAndWait().ifPresent(updatedAnimal -> loadAnimals(selectedShelter));
     }
+
 
     private void showEditShelterDialog() {
         if (selectedShelter != null) {
@@ -311,7 +326,7 @@ public class AdminPanel extends AccountPanel {
     }
 
     private void handleDeleteAnimal() {
-        Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
+        selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
         if (selectedAnimal != null) {
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -325,7 +340,7 @@ public class AdminPanel extends AccountPanel {
             Optional<ButtonType> result = confirmationAlert.showAndWait();
 
             if (result.isPresent() && result.get() == yesButton) {
-                selectedShelter.removeAnimal(selectedAnimal);
+                shelterFacade.removeAnimal(selectedShelter.getShelterName(), selectedAnimal);
                 loadAnimals(selectedShelter);
             }
         } else {

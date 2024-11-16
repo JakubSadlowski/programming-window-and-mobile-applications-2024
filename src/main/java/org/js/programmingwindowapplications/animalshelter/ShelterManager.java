@@ -43,6 +43,37 @@ public class ShelterManager {
         }
     }
 
+    public void modifyShelter(String oldName, String newName) {
+        if (!shelters.containsKey(oldName)) {
+            throw new IllegalArgumentException("Shelter with the name " + oldName + " does not exist.");
+        }
+        if (shelters.containsKey(newName)) {
+            throw new IllegalArgumentException("A shelter with the name " + newName + " already exists.");
+        }
+
+        AnimalShelter shelter = shelters.remove(oldName);
+        shelter.setShelterName(newName);
+        shelters.put(newName, shelter);
+    }
+
+    public void modifyAnimal(String shelterName, String oldName, String newName, String newSpecies, AnimalCondition newCondition, int newAge, double newPrice) {
+        AnimalShelter shelter = getShelter(shelterName);
+        if (shelter == null) {
+            throw new IllegalArgumentException("Shelter " + shelterName + " does not exist.");
+        }
+
+        Animal animal = shelter.getAnimalList().stream()
+                .filter(a -> a.getName().equals(oldName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Animal with the name " + oldName + " not found in the shelter."));
+
+        animal.setName(newName);
+        animal.setSpecies(newSpecies);
+        animal.setCondition(newCondition);
+        animal.setAge(newAge);
+        animal.setPrice(newPrice);
+    }
+
     public AnimalShelter removeShelter(String name) {
         if (!shelters.containsKey(name)) {
             System.out.println("Shelter with name " + name + " does not exist.");

@@ -17,14 +17,8 @@ public class ShelterFacade {
         this.shelterManager = shelterManager;
     }
 
-    public String validateUser(String username, String password) {
-        Account account = accountsManager.findAccount(username, password);
-        if (account instanceof AdminAccount) {
-            return "admin";
-        } else if (account instanceof ClientAccount) {
-            return "user";
-        }
-        return null;
+    public String login(String username, String password) {
+        return accountsManager.authenticate(username, password);
     }
 
     public Map<String, AnimalShelter> getShelters() {
@@ -44,19 +38,19 @@ public class ShelterFacade {
     }
 
     public void modifyShelter(String oldName, String newName) {
-        if (!shelterManager.getShelters().containsKey(oldName)) {
-            throw new IllegalArgumentException("Shelter with the name " + oldName + " does not exist.");
-        }
-        if (shelterManager.getShelters().containsKey(newName)) {
-            throw new IllegalArgumentException("A shelter with the name " + newName + " already exists.");
-        }
+        shelterManager.modifyShelter(oldName, newName);
+    }
 
-        AnimalShelter shelter = shelterManager.getShelters().remove(oldName);
-        shelter.setShelterName(newName);
-        shelterManager.getShelters().put(newName, shelter);
+    public void modifyAnimal(String shelterName, String oldName, String newName, String newSpecies, AnimalCondition newCondition, int newAge, double newPrice) {
+        shelterManager.modifyAnimal(shelterName, oldName, newName, newSpecies, newCondition, newAge, newPrice);
     }
 
     public void removeShelter(String shelterName) {
         shelterManager.removeShelter(shelterName);
     }
+
+    public void removeAnimal(String shelterName, Animal animal) {
+        shelterManager.getShelter(shelterName).removeAnimal(animal);
+    }
+
 }

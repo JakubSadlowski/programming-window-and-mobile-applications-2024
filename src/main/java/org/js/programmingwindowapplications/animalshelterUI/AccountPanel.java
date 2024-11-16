@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class AccountPanel {
     protected AnimalShelter selectedShelter;
+    protected Animal selectedAnimal;
     protected ObservableList<Animal> animalData = FXCollections.observableArrayList();
     protected ObservableList<AnimalShelter> shelterData = FXCollections.observableArrayList();
     protected ShelterFacade shelterFacade;

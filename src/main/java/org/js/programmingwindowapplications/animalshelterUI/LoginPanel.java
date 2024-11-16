@@ -32,7 +32,7 @@ public class LoginPanel {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        String role = shelterFacade.validateUser(username, password);
+        String role = shelterFacade.login(username, password);
         try {
             if ("admin".equals(role)) {
                 showAdminView();

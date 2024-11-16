@@ -9,5 +9,6 @@ module org.js.programmingwindowapplications {
     opens org.js.programmingwindowapplications to javafx.fxml;
     exports org.js.programmingwindowapplications;
     exports org.js.programmingwindowapplications.animalshelterUI;
+    exports org.js.programmingwindowapplications.animalshelter;
     opens org.js.programmingwindowapplications.animalshelterUI to javafx.fxml;
 }
