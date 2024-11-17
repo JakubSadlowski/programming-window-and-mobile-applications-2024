@@ -56,23 +56,19 @@ public class ClientPanel extends AccountPanel {
     }
 
     public void handleContactShelter() {
-        /*if (selectedShelter != null) {
+        if (selectedShelter != null) {
             String shelterName = selectedShelter.getShelterName();
-            String phone = selectedShelter.getPhoneNumber(); // Przykład pola w klasie Shelter
-            String email = selectedShelter.getEmail();       // Przykład pola w klasie Shelter
-            String address = selectedShelter.getAddress();   // Przykład pola w klasie Shelter
+            String phone = shelterFacade.getShelterPhoneNumber(shelterName);
 
             String contactDetails = String.format(
-                    "Shelter: %s%nPhone: %s%nEmail: %s%nAddress: %s",
+                    "Shelter: %s%nPhone: %s",
                     shelterName,
-                    phone != null ? phone : "Not available",
-                    email != null ? email : "Not available",
-                    address != null ? address : "Not available"
+                    phone != null ? phone : "Not available"
             );
 
             showAlert("Contact Shelter", contactDetails);
         } else {
             showAlert("Contact Error", "Please select a shelter to contact.");
-        }*/
+        }
     }
 }

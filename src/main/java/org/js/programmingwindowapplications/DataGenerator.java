@@ -32,12 +32,12 @@ public class DataGenerator {
     public ShelterManager addShelters() {
         ShelterManager manager = new ShelterManager();
 
-        manager.addShelter("Wild Paws", 6, "555-123-4567");
-        manager.addShelter("Green Meadows", 4, "555-234-5678");
-        manager.addShelter("Happy Tails Rescue", 5, "555-345-6789");
-        manager.addShelter("Forest Friends", 7, "555-456-7890");
-        manager.addShelter("Sunset Haven", 3, "555-567-8901");
-        manager.addShelter("Ocean Breeze Shelter", 8, "555-678-9012");
+        manager.addShelter("Wild Paws", 6, "555-123-456");
+        manager.addShelter("Green Meadows", 4, "555-234-567");
+        manager.addShelter("Happy Tails Rescue", 5, "555-345-678");
+        manager.addShelter("Forest Friends", 7, "555-456-789");
+        manager.addShelter("Sunset Haven", 3, "555-567-890");
+        manager.addShelter("Ocean Breeze Shelter", 8, "555-678-901");
 
         Animal animal1 = new Animal("Rocky", "Dog", AnimalCondition.HEALTHY, 3, 150.0);
         Animal animal2 = new Animal("Luna", "Cat", AnimalCondition.UNHEALTHY, 2, 80.0);
