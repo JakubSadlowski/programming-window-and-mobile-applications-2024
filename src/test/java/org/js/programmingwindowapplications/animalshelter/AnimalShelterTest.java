@@ -23,6 +23,7 @@ class AnimalShelterTest {
         animal2 = new Animal("Mittens", "Siamese", AnimalCondition.HEALTHY, 2, 80.0);
         animal3 = new Animal("Coco", "Parrot", AnimalCondition.ADOPTED, 5, 120.0);
         animal4 = new Animal("Rocky", "Ferret", AnimalCondition.QUARANTINE, 3, 200.0);
+        animal5 = new Animal("Fluffy", "Cat", AnimalCondition.HEALTHY, 4, 60.0);
 
         System.setErr(new PrintStream(errContent));
     }
@@ -217,5 +218,79 @@ class AnimalShelterTest {
 
         //Then
         assertEquals(200.0, maxPrice.getPrice());
+    }
+
+    @Test
+    void changePhoneNumberTest() {
+        // Given
+        String newPhoneNumber = "555-333-222";
+
+        // When
+        animalShelter.setPhoneNumber(newPhoneNumber);
+
+        // Then
+        assertEquals(newPhoneNumber, animalShelter.getPhoneNumber(), "Phone number should be updated.");
+    }
+
+    @Test
+    void changeCapacityTest() {
+        // Given
+        animalShelter.setMaxCapacity(6);  // Change to a larger capacity
+        addAnimals(animal1, animal2, animal3, animal4); // Add animals to the shelter
+
+        // When
+        boolean added = animalShelter.addAnimal(animal5);
+
+        // Then
+        assertTrue(added, "Adding an animal should be allowed when capacity is increased.");
+        assertEquals(5, animalShelter.getCapacity(), "Shelter capacity should be updated to 5.");
+    }
+
+    @Test
+    void removeAnimalFromEmptyShelterTest() {
+        // Given
+        animalShelter.removeAnimal(animal1);  // Try to remove an animal when shelter is empty
+
+        // When
+        int currentCapacity = animalShelter.getCapacity();
+
+        // Then
+        assertEquals(0, currentCapacity, "Capacity should be 0 when no animals are left in the shelter.");
+    }
+
+    @Test
+    void sortByNameWhenEmptyTest() {
+        // Given
+        // No animals added
+
+        // When
+        List<Animal> sortedAnimals = animalShelter.sortByName();
+
+        // Then
+        assertTrue(sortedAnimals.isEmpty(), "Sorting should return an empty list when there are no animals.");
+    }
+
+    @Test
+    void sortByPriceWhenEmptyTest() {
+        // Given
+        // No animals added
+
+        // When
+        List<Animal> sortedAnimals = animalShelter.sortByPrice();
+
+        // Then
+        assertTrue(sortedAnimals.isEmpty(), "Sorting should return an empty list when there are no animals.");
+    }
+
+    @Test
+    void addAnimalWithSameNameButDifferentDetailsTest() {
+        // Given
+        Animal sameNameAnimal = new Animal("Azor", "Dog", AnimalCondition.HEALTHY, 4, 50.0);
+
+        // When
+        boolean added = animalShelter.addAnimal(sameNameAnimal);
+
+        // Then
+        assertTrue(added, "Different animals with the same name should be allowed if they differ in species, age, or price.");
     }
 }
