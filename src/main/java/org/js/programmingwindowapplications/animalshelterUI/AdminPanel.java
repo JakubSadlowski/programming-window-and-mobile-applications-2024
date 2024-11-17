@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class AdminPanel extends AccountPanel {
@@ -59,7 +60,11 @@ public class AdminPanel extends AccountPanel {
         animalAgeField = new TextField();
         animalPriceField = new TextField();
         ComboBox<AnimalCondition> conditionComboBox = new ComboBox<>();
-        conditionComboBox.getItems().addAll(AnimalCondition.values());
+        conditionComboBox.getItems().addAll(
+                Arrays.stream(AnimalCondition.values())
+                        .filter(condition -> condition != AnimalCondition.ADOPTED)
+                        .toList()
+        );
 
         createAnimalGrid(conditionComboBox);
 
@@ -209,6 +214,13 @@ public class AdminPanel extends AccountPanel {
 
                     if (newName.isEmpty() || newSpecies.isEmpty()) {
                         showAlert("Input Error", "Name and species cannot be empty.");
+                        return null;
+                    }
+
+                    if (newCondition == AnimalCondition.ADOPTED) {
+                        shelterFacade.removeAnimal(selectedShelter.getShelterName(), animal);
+                        loadAnimals(selectedShelter);
+                        showAlert("Animal Removed", "The animal has been removed as it is now marked as ADOPTED.");
                         return null;
                     }
 

@@ -53,4 +53,7 @@ public class ShelterFacade {
         shelterManager.getShelter(shelterName).removeAnimal(animal);
     }
 
+    public Animal adoptAnimal(String shelterName, Animal animal) {
+        return shelterManager.getShelter(shelterName).adoptAnimal(animal);
+    }
 }
