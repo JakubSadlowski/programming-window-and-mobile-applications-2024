@@ -7,6 +7,12 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.ClientPanel">
     <top>
         <Label text="Client Panel - Browse Animals" style="-fx-font-size: 20;" alignment="CENTER" />
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Filter by name:" />
+            <TextField fx:id="filterTextField" promptText="Enter filter text..." />
+            <Label text="State:" />
+            <ComboBox fx:id="stateComboBox" />
+        </HBox>
     </top>
     <center>
         <HBox spacing="20">

@@ -36,6 +36,10 @@ public class AccountPanel {
     private TableColumn<Animal, Double> priceColumn;
     @FXML
     private TableColumn<Animal, String> conditionColumn;
+    @FXML
+    private TextField filterTextField;
+    @FXML
+    private ComboBox<String> stateComboBox;
 
     public void setShelterFacade(ShelterFacade shelterFacade) {
         this.shelterFacade = shelterFacade;
@@ -43,6 +47,54 @@ public class AccountPanel {
 
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
+    }
+
+    @FXML
+    public void initialize() {
+        stateComboBox.setItems(FXCollections.observableArrayList("All", "HEALTHY", "ADOPTED", "UNHEALTHY", "QUARANTINE"));
+        stateComboBox.getSelectionModel().select("All");
+        stateComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> applyFilters());
+        filterTextField.setOnAction(event -> applyFilters());
+    }
+
+    private void applyFilters() {
+        String filterText = filterTextField.getText().toLowerCase();
+        String selectedState = stateComboBox.getSelectionModel().getSelectedItem();
+
+        if (selectedShelter == null) {
+            ObservableList<AnimalShelter> filteredShelters = FXCollections.observableArrayList();
+
+            for (AnimalShelter shelter : shelterFacade.getShelters().values()) {
+                if (filterText.isEmpty() || shelter.getShelterName().toLowerCase().contains(filterText)) {
+                    filteredShelters.add(shelter);
+                }
+            }
+
+            shelterListView.setItems(filteredShelters);
+
+            if (filteredShelters.isEmpty()) {
+                shelterListView.setPlaceholder(new Label("No shelters match the filter."));
+            }
+
+            return;
+        }
+
+        ObservableList<Animal> filteredAnimals = FXCollections.observableArrayList();
+
+        for (Animal animal : shelterFacade.getAnimals(selectedShelter.getShelterName())) {
+            boolean matchesFilter = filterText.isEmpty() || animal.getName().toLowerCase().contains(filterText);
+            boolean matchesState = "All".equals(selectedState) || animal.getCondition().toString().equalsIgnoreCase(selectedState);
+
+            if (matchesFilter && matchesState) {
+                filteredAnimals.add(animal);
+            }
+        }
+
+        animalTable.setItems(filteredAnimals);
+
+        if (filteredAnimals.isEmpty()) {
+            animalTable.setPlaceholder(new Label("No animals match the filter."));
+        }
     }
 
     public void loadShelters() {
