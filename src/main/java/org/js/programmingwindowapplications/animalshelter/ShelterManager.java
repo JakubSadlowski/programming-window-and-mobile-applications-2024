@@ -24,12 +24,12 @@ public class ShelterManager {
         return shelters.get(shelterName).getAnimalList();
     }
 
-    public boolean addShelter(String name, int capacity) {
+    public boolean addShelter(String name, int capacity, String phoneNumber) {
         if (shelters.containsKey(name)) {
             System.out.println("Shelter with name " + name + " already exists.");
             return false;
         }
-        shelters.put(name, new AnimalShelter(name, capacity));
+        shelters.put(name, new AnimalShelter(name, capacity, phoneNumber));
         return true;
     }
 

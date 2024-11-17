@@ -7,8 +7,8 @@ public class Lab2 {
         try {
             // Create ShelterManager
             ShelterManager manager = new ShelterManager();
-            manager.addShelter("Dog House", 5);
-            manager.addShelter("Cat House", 3);
+            manager.addShelter("Dog House", 5, "555-221-332");
+            manager.addShelter("Cat House", 3, "541-621-347");
 
             // Create animals
             Animal animal1 = new Animal("Buddy", "Dog", AnimalCondition.HEALTHY, 2, 150.0);

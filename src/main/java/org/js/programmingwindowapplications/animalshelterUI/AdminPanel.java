@@ -23,6 +23,8 @@ public class AdminPanel extends AccountPanel {
     private TextField shelterNameField;
     @FXML
     private TextField shelterMaxCapacityField;
+    @FXML
+    private TextField shelterPhoneNumberField;
     private GridPane grid;
 
     @FXML
@@ -117,6 +119,7 @@ public class AdminPanel extends AccountPanel {
 
         shelterNameField = new TextField();
         shelterMaxCapacityField = new TextField();
+        shelterPhoneNumberField = new TextField();
 
         createShelterGrid();
 
@@ -127,6 +130,12 @@ public class AdminPanel extends AccountPanel {
                 try {
                     String name = shelterNameField.getText();
                     int maxCapacity = Integer.parseInt(shelterMaxCapacityField.getText());
+                    String phoneNumber = shelterPhoneNumberField.getText();
+
+                    if (!phoneNumber.matches("\\d{3}-\\d{3}-\\d{3}")) {
+                        showAlert("Input Error", "Phone number must be in the format ddd-ddd-ddd.");
+                        return null;
+                    }
 
                     if (name.isEmpty()) {
                         showAlert("Input Error", "Shelter name cannot be empty.");
@@ -137,7 +146,7 @@ public class AdminPanel extends AccountPanel {
                         return null;
                     }
 
-                    shelterFacade.addShelter(name, maxCapacity);
+                    shelterFacade.addShelter(name, maxCapacity, phoneNumber);
                     loadShelters();
                 } catch (NumberFormatException e) {
                     showAlert("Input Error", "Please enter a valid number for max capacity.");
@@ -149,6 +158,7 @@ public class AdminPanel extends AccountPanel {
         dialog.showAndWait();
     }
 
+
     private void createShelterGrid() {
         grid = new GridPane();
         grid.setHgap(10);
@@ -157,6 +167,8 @@ public class AdminPanel extends AccountPanel {
         grid.add(shelterNameField, 1, 0);
         grid.add(new Label("Max Capacity:"), 0, 1);
         grid.add(shelterMaxCapacityField, 1, 1);
+        grid.add(new Label("Phone Number:"), 0, 2);
+        grid.add(shelterPhoneNumberField, 1, 2);
     }
 
 
@@ -245,7 +257,6 @@ public class AdminPanel extends AccountPanel {
         dialog.showAndWait().ifPresent(updatedAnimal -> loadAnimals(selectedShelter));
     }
 
-
     private void showEditShelterDialog() {
         if (selectedShelter != null) {
             Dialog<Void> dialog = new Dialog<>();
@@ -257,6 +268,7 @@ public class AdminPanel extends AccountPanel {
 
             shelterNameField = new TextField(selectedShelter.getShelterName());
             shelterMaxCapacityField = new TextField(String.valueOf(selectedShelter.getMaxCapacity()));
+            shelterPhoneNumberField = new TextField(selectedShelter.getPhoneNumber());
 
             createShelterGrid();
 
@@ -267,6 +279,12 @@ public class AdminPanel extends AccountPanel {
                     try {
                         String newName = shelterNameField.getText().trim();
                         int newCapacity = Integer.parseInt(shelterMaxCapacityField.getText().trim());
+                        String newPhoneNumber = shelterPhoneNumberField.getText().trim();
+
+                        if (!newPhoneNumber.matches("\\d{3}-\\d{3}-\\d{3}")) {
+                            showAlert("Input Error", "Phone number must be in the format ddd-ddd-ddd.");
+                            return null;
+                        }
 
                         if (newName.isEmpty()) {
                             showAlert("Input Error", "Shelter name cannot be empty.");
@@ -284,6 +302,7 @@ public class AdminPanel extends AccountPanel {
 
                         selectedShelter.setShelterName(newName);
                         selectedShelter.setMaxCapacity(newCapacity);
+                        selectedShelter.setPhoneNumber(newPhoneNumber);
 
                         loadShelters();
                     } catch (NumberFormatException e) {

@@ -33,8 +33,8 @@ public class ShelterFacade {
         shelterManager.addAnimal(shelterName, name, species, condition, age, price);
     }
 
-    public void addShelter(String name, int maxCapacity) {
-        shelterManager.addShelter(name, maxCapacity);
+    public void addShelter(String name, int maxCapacity, String phoneNumber) {
+        shelterManager.addShelter(name, maxCapacity, phoneNumber);
     }
 
     public void modifyShelter(String oldName, String newName) {

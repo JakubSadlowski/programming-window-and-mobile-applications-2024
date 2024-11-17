@@ -10,11 +10,21 @@ public class AnimalShelter {
     private String shelterName;
     private final List<Animal> animalList;
     private int maxCapacity;
+    private String phoneNumber;
 
-    public AnimalShelter(String shelterName, int maxCapacity) {
+    public AnimalShelter(String shelterName, int maxCapacity, String phoneNumber) {
         this.shelterName = shelterName;
         this.maxCapacity = maxCapacity;
+        this.phoneNumber = phoneNumber;
         this.animalList = new ArrayList<>();
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getCapacity() {

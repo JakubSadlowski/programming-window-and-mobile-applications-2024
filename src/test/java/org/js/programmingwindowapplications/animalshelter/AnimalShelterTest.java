@@ -18,7 +18,7 @@ class AnimalShelterTest {
 
     @BeforeEach
     public void setUp() {
-        animalShelter = new AnimalShelter("Shelter", 4);
+        animalShelter = new AnimalShelter("Shelter", 4, "555-222-111");
         animal1 = new Animal("Azor", "Dog", AnimalCondition.HEALTHY, 3, 40.0);
         animal2 = new Animal("Mittens", "Siamese", AnimalCondition.HEALTHY, 2, 80.0);
         animal3 = new Animal("Coco", "Parrot", AnimalCondition.ADOPTED, 5, 120.0);
