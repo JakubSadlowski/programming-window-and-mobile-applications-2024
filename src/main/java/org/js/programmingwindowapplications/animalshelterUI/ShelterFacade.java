@@ -56,4 +56,13 @@ public class ShelterFacade {
     public Animal adoptAnimal(String shelterName, Animal animal) {
         return shelterManager.getShelter(shelterName).adoptAnimal(animal);
     }
+
+    /*public String getShelterContactInfo(String shelterName) {
+        AnimalShelter shelter = shelterManager.getShelter(shelterName);
+        if (shelter == null) {
+            return "Shelter not found.";
+        }
+        return shelter.getContactInfo();
+    }*/
+
 }

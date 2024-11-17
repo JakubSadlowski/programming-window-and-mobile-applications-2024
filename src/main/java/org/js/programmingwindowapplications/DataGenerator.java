@@ -41,7 +41,7 @@ public class DataGenerator {
 
         Animal animal1 = new Animal("Rocky", "Dog", AnimalCondition.HEALTHY, 3, 150.0);
         Animal animal2 = new Animal("Luna", "Cat", AnimalCondition.UNHEALTHY, 2, 80.0);
-        Animal animal3 = new Animal("Charlie", "Rabbit", AnimalCondition.ADOPTED, 1, 60.0);
+        Animal animal3 = new Animal("Charlie", "Rabbit", AnimalCondition.QUARANTINE, 1, 60.0);
         Animal animal4 = new Animal("Bella", "Dog", AnimalCondition.HEALTHY, 4, 120.0);
         Animal animal5 = new Animal("Max", "Cat", AnimalCondition.QUARANTINE, 2, 70.0);
         Animal animal6 = new Animal("Milo", "Rabbit", AnimalCondition.UNHEALTHY, 3, 50.0);
@@ -49,14 +49,14 @@ public class DataGenerator {
         Animal animal8 = new Animal("Oliver", "Cat", AnimalCondition.HEALTHY, 3, 100.0);
         Animal animal9 = new Animal("Ruby", "Rabbit", AnimalCondition.QUARANTINE, 2, 65.0);
         Animal animal10 = new Animal("Socks", "Dog", AnimalCondition.UNHEALTHY, 6, 110.0);
-        Animal animal11 = new Animal("Misty", "Cat", AnimalCondition.ADOPTED, 1, 85.0);
+        Animal animal11 = new Animal("Misty", "Cat", AnimalCondition.HEALTHY, 1, 85.0);
         Animal animal12 = new Animal("Buddy", "Rabbit", AnimalCondition.HEALTHY, 4, 55.0);
         Animal animal13 = new Animal("Shadow", "Dog", AnimalCondition.UNHEALTHY, 3, 95.0);
         Animal animal14 = new Animal("Toby", "Cat", AnimalCondition.HEALTHY, 2, 75.0);
         Animal animal15 = new Animal("Oscar", "Rabbit", AnimalCondition.QUARANTINE, 2, 50.0);
         Animal animal16 = new Animal("Lily", "Dog", AnimalCondition.HEALTHY, 4, 140.0);
         Animal animal17 = new Animal("Daisy", "Cat", AnimalCondition.UNHEALTHY, 3, 60.0);
-        Animal animal18 = new Animal("Leo", "Rabbit", AnimalCondition.ADOPTED, 1, 45.0);
+        Animal animal18 = new Animal("Leo", "Rabbit", AnimalCondition.QUARANTINE, 1, 45.0);
         Animal animal19 = new Animal("Coco", "Dog", AnimalCondition.HEALTHY, 4, 130.0);
         Animal animal20 = new Animal("Chloe", "Cat", AnimalCondition.QUARANTINE, 5, 90.0);
 
