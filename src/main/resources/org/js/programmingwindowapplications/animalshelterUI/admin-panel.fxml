@@ -42,6 +42,7 @@
             <Button text="Add" onAction="#handleAdd" />
             <Button text="Edit" onAction="#handleEdit" />
             <Button text="Delete" onAction="#handleDelete" />
+            <Button text="Sort Shelters by name" onAction="#handleSortSheltersByName" />
         </HBox>
     </bottom>
 </BorderPane>

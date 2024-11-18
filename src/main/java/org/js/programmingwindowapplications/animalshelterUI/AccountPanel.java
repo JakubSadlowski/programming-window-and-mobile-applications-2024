@@ -12,6 +12,8 @@ import javafx.scene.control.Alert.AlertType;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
+
+import java.util.Comparator;
 import java.util.Map;
 
 public class AccountPanel {
@@ -94,6 +96,14 @@ public class AccountPanel {
 
         if (filteredAnimals.isEmpty()) {
             animalTable.setPlaceholder(new Label("No animals match the filter."));
+        }
+    }
+
+    @FXML
+    private void handleSortSheltersByName() {
+        if (shelterData != null) {
+            shelterData.sort(Comparator.comparing(AnimalShelter::getShelterName));
+            shelterListView.setItems(shelterData);
         }
     }
 
