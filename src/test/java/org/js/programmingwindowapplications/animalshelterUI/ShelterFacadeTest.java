@@ -3,7 +3,7 @@ package org.js.programmingwindowapplications.animalshelterUI;
 import org.js.programmingwindowapplications.animalshelter.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.Mock;
 
 import java.util.*;
 
