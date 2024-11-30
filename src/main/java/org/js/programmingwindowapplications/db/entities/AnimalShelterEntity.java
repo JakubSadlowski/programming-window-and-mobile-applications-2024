@@ -1,6 +1,8 @@
 package org.js.programmingwindowapplications.db.entities;
 
 import jakarta.persistence.*;
+import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class AnimalShelterEntity {
     public AnimalShelterEntity() {}
 
     // Konstruktor do konwersji z Twojej klasy AnimalShelter
-    public AnimalShelterEntity(org.js.programmingwindowapplications.animalshelter.AnimalShelter shelter) {
+    public AnimalShelterEntity(AnimalShelter shelter) {
         this.shelterName = shelter.getShelterName();
         this.maxCapacity = shelter.getMaxCapacity();
         this.phoneNumber = shelter.getPhoneNumber();
@@ -62,9 +64,9 @@ public class AnimalShelterEntity {
     }
 
     // Metoda do konwersji na Twoją klasę AnimalShelter
-    public org.js.programmingwindowapplications.animalshelter.AnimalShelter toAnimalShelter() {
-        org.js.programmingwindowapplications.animalshelter.AnimalShelter shelter =
-                new org.js.programmingwindowapplications.animalshelter.AnimalShelter(
+    public AnimalShelter toAnimalShelter() {
+        AnimalShelter shelter =
+                new AnimalShelter(
                         shelterName, maxCapacity, phoneNumber
                 );
 

@@ -1,6 +1,7 @@
 package org.js.programmingwindowapplications.db.entities;
 
 import jakarta.persistence.*;
+import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 
 @Entity
@@ -26,7 +27,7 @@ public class AnimalEntity {
     public AnimalEntity() {}
 
     // Konstruktor do konwersji z Twojej klasy Animal
-    public AnimalEntity(org.js.programmingwindowapplications.animalshelter.Animal animal) {
+    public AnimalEntity(Animal animal) {
         this.name = animal.getName();
         this.species = animal.getSpecies();
         this.price = animal.getPrice();
@@ -57,8 +58,8 @@ public class AnimalEntity {
     public void setShelter(AnimalShelterEntity shelter) { this.shelter = shelter; }
 
     // Metoda do konwersji na Twoją klasę Animal
-    public org.js.programmingwindowapplications.animalshelter.Animal toAnimal() {
-        return new org.js.programmingwindowapplications.animalshelter.Animal(
+    public Animal toAnimal() {
+        return new Animal(
                 name, species, condition, age, price
         );
     }
