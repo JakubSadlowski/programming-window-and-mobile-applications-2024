@@ -50,8 +50,10 @@ public class AnimalShelterEntity {
     public void setRatings(List<RatingEntity> ratings) { this.ratings = ratings; }
 
     public void addAnimal(AnimalEntity animal) {
-        animals.add(animal);
-        animal.setShelter(this);
+        if (animal != null && !animals.contains(animal)) {
+            animals.add(animal);
+            animal.setShelter(this);  
+        }
     }
 
     public void removeAnimal(AnimalEntity animal) {
