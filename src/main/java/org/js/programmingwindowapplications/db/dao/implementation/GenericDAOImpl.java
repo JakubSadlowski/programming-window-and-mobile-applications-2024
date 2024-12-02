@@ -5,6 +5,7 @@ import jakarta.persistence.EntityTransaction;
 import org.js.programmingwindowapplications.db.dao.GenericDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GenericDAOImpl<T> implements GenericDAO<T> {
     private final EntityManager entityManager;
@@ -29,8 +30,8 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
     @Override
-    public T findById(Long id) {
-        return entityManager.find(entityClass, id);
+    public Optional<T> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(entityClass, id));
     }
 
     @Override

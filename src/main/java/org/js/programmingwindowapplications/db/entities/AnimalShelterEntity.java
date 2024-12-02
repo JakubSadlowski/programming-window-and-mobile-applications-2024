@@ -17,7 +17,7 @@ public class AnimalShelterEntity {
     private int maxCapacity;
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<AnimalEntity> animals = new ArrayList<>();
 
     @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -25,7 +25,6 @@ public class AnimalShelterEntity {
 
     public AnimalShelterEntity() {}
 
-    // Konstruktor do konwersji AnimalShelter
     public AnimalShelterEntity(AnimalShelter shelter) {
         this.shelterName = shelter.getShelterName();
         this.maxCapacity = shelter.getMaxCapacity();
@@ -60,7 +59,6 @@ public class AnimalShelterEntity {
         animal.setShelter(null);
     }
 
-    // Metoda do konwersji AnimalShelter
     public AnimalShelter toAnimalShelter() {
         AnimalShelter shelter =
                 new AnimalShelter(

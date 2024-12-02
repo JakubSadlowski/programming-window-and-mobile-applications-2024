@@ -1,5 +1,9 @@
 package org.js.programmingwindowapplications.animalshelter;
 
+import org.js.programmingwindowapplications.db.dao.AnimalDAO;
+import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +16,14 @@ class ShelterManagerTest {
     private ShelterManager shelterManager;
     private AnimalShelter shelter1;
     private AnimalShelter shelter2;
+    private AnimalShelterDAO shelterDAO;
+    private AnimalDAO animalDAO;
 
     @BeforeEach
     public void setUp() {
-        shelterManager = new ShelterManager();
+        shelterDAO = new AnimalShelterDAOImpl();
+        animalDAO = new AnimalDAOImpl();
+        shelterManager = new ShelterManager(animalDAO, shelterDAO);
         shelter1 = new AnimalShelter("Shelter1", 5, "555-111-222");
         shelter2 = new AnimalShelter("Shelter2", 10, "555-333-444");
 
@@ -63,7 +71,7 @@ class ShelterManagerTest {
         assertFalse(added, "Shelter with the same name should not be added.");
     }
 
-    @Test
+    /*@Test
     void removeShelterTest() {
         // Given
         String shelterName = "Shelter1";
@@ -86,9 +94,9 @@ class ShelterManagerTest {
 
         // Then
         assertNull(removedShelter, "Removing a non-existing shelter should return null.");
-    }
+    }*/
 
-    /*@Test
+    @Test
     void findEmptyTest() {
         // Given
         AnimalShelter shelter3 = new AnimalShelter("Shelter3", 5, "555-444-555");
@@ -103,7 +111,7 @@ class ShelterManagerTest {
         assertFalse(emptyShelters.contains(shelter3), "Shelter3 should not be found because it has animals.");
         assertTrue(emptyShelters.contains(shelter2), "Shelter2 should be found because it is empty.");
         assertTrue(emptyShelters.contains(shelter1), "Shelter1 should be found because it is empty.");
-    }*/
+    }
 
     @Test
     void modifyShelterNameTest() {

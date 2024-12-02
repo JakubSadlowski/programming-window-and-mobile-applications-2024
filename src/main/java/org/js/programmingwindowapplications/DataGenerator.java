@@ -7,9 +7,16 @@ import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.AccountsManager;
 import org.js.programmingwindowapplications.animalshelterUI.AdminAccount;
 import org.js.programmingwindowapplications.animalshelterUI.ClientAccount;
+import org.js.programmingwindowapplications.db.dao.AnimalDAO;
+import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
 
 public class DataGenerator {
     private static DataGenerator instance;
+
+    private final AnimalShelterDAO shelterDAO = new AnimalShelterDAOImpl();
+    private final AnimalDAO animalDAO = new AnimalDAOImpl();
 
     private DataGenerator() {}
 
@@ -30,7 +37,7 @@ public class DataGenerator {
     }
 
     public ShelterManager addShelters() {
-        ShelterManager manager = new ShelterManager();
+        ShelterManager manager = new ShelterManager(animalDAO, shelterDAO);
 
         manager.addShelter("Wild Paws", 6, "555-123-456");
         manager.addShelter("Green Meadows", 4, "555-234-567");

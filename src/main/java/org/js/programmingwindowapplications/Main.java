@@ -9,6 +9,7 @@ import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.*;
+import org.js.programmingwindowapplications.db.HibernateUtil;
 
 public class Main extends Application {
     private Stage primaryStage;
@@ -16,6 +17,7 @@ public class Main extends Application {
     private static Main instance;
 
     public static void main(String[] args) {
+        HibernateUtil.testConnection();
         launch(args);
     }
 

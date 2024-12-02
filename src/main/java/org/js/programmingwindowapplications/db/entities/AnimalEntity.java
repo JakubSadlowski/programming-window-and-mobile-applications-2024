@@ -17,15 +17,15 @@ public class AnimalEntity {
     private int age;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "animal_condition")
     private AnimalCondition condition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shelter_id")
     private AnimalShelterEntity shelter;
 
     public AnimalEntity() {}
 
-    // Konstruktor do konwersji Animal
     public AnimalEntity(Animal animal) {
         this.name = animal.getName();
         this.species = animal.getSpecies();
@@ -55,7 +55,6 @@ public class AnimalEntity {
     public AnimalShelterEntity getShelter() { return shelter; }
     public void setShelter(AnimalShelterEntity shelter) { this.shelter = shelter; }
 
-    // Metoda do konwersji Animal
     public Animal toAnimal() {
         return new Animal(
                 name, species, condition, age, price
