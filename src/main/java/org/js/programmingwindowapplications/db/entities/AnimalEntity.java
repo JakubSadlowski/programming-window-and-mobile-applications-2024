@@ -23,10 +23,9 @@ public class AnimalEntity {
     @JoinColumn(name = "shelter_id")
     private AnimalShelterEntity shelter;
 
-    // Konstruktor domyślny wymagany przez JPA
     public AnimalEntity() {}
 
-    // Konstruktor do konwersji z Twojej klasy Animal
+    // Konstruktor do konwersji Animal
     public AnimalEntity(Animal animal) {
         this.name = animal.getName();
         this.species = animal.getSpecies();
@@ -35,7 +34,6 @@ public class AnimalEntity {
         this.condition = animal.getCondition();
     }
 
-    // Gettery i settery
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -57,7 +55,7 @@ public class AnimalEntity {
     public AnimalShelterEntity getShelter() { return shelter; }
     public void setShelter(AnimalShelterEntity shelter) { this.shelter = shelter; }
 
-    // Metoda do konwersji na Twoją klasę Animal
+    // Metoda do konwersji Animal
     public Animal toAnimal() {
         return new Animal(
                 name, species, condition, age, price

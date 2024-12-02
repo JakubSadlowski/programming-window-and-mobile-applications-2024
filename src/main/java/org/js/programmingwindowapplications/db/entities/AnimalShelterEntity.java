@@ -23,17 +23,15 @@ public class AnimalShelterEntity {
     @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RatingEntity> ratings = new ArrayList<>();
 
-    // Konstruktor domyślny wymagany przez JPA
     public AnimalShelterEntity() {}
 
-    // Konstruktor do konwersji z Twojej klasy AnimalShelter
+    // Konstruktor do konwersji AnimalShelter
     public AnimalShelterEntity(AnimalShelter shelter) {
         this.shelterName = shelter.getShelterName();
         this.maxCapacity = shelter.getMaxCapacity();
         this.phoneNumber = shelter.getPhoneNumber();
     }
 
-    // Gettery i settery
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -52,7 +50,6 @@ public class AnimalShelterEntity {
     public List<RatingEntity> getRatings() { return ratings; }
     public void setRatings(List<RatingEntity> ratings) { this.ratings = ratings; }
 
-    // Metody pomocnicze
     public void addAnimal(AnimalEntity animal) {
         animals.add(animal);
         animal.setShelter(this);
@@ -63,7 +60,7 @@ public class AnimalShelterEntity {
         animal.setShelter(null);
     }
 
-    // Metoda do konwersji na Twoją klasę AnimalShelter
+    // Metoda do konwersji AnimalShelter
     public AnimalShelter toAnimalShelter() {
         AnimalShelter shelter =
                 new AnimalShelter(
