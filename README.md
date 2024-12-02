@@ -29,7 +29,6 @@ The application uses the **Facade Design Pattern** to separate the user interfac
 - **ShelterManager:** Manages shelters and animals, including adding, removing, and modifying records.
 - **ShelterFacade:** Provides a simplified interface for interacting with shelters and animals.
 - **AccountsManager:** Handles user authentication and login functionality.
-- **DAO:** Data Access Object layer for handling the persistence of shelter and animal data (can be extended for database integration).
 
 ## GUI
 
@@ -41,12 +40,5 @@ The user interface is built using **JavaFX**, providing a modern and responsive 
 ## Technologies Used
 - **JavaFX:** For building the GUI.
 - **Java:** The main programming language used for the backend logic.
-- **DAO Pattern:** To handle data storage and retrieval.
 - **Facade Pattern:** To simplify interaction with the business logic.
-- **Collections Framework:** For managing shelters, animals, and other data structures.
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/animal-shelter-management-system.git
+- **Hibernate** Managing database.
