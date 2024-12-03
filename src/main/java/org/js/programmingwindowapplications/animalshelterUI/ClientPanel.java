@@ -81,7 +81,6 @@ public class ClientPanel extends AccountPanel {
         dialog.setTitle("Rate Shelter - " + selectedShelter.getShelterName());
         dialog.setHeaderText("Please rate your experience");
 
-        // Create the rating content
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -107,11 +106,6 @@ public class ClientPanel extends AccountPanel {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == submitButton) {
-                if (commentArea.getText().trim().isEmpty()) {
-                    showAlert("Error", "Please enter a comment");
-                    return null;
-                }
-
                 shelterFacade.addRating(
                         selectedShelter.getShelterName(),
                         ratingSpinner.getValue(),

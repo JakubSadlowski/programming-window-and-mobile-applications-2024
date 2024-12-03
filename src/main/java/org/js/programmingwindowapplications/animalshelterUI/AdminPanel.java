@@ -435,43 +435,4 @@ public class AdminPanel extends AccountPanel {
 
         dialog.showAndWait();*/
     }
-
-    // Rating manager for future implementation
-    @FXML
-    private void handleManageRatings() {
-        /*if (selectedShelter == null) {
-            showAlert("Error", "Please select a shelter");
-            return;
-        }
-
-        Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle("Manage Ratings - " + selectedShelter.getShelterName());
-
-        TableView<RatingEntity> ratingsTable = new TableView<>();
-
-        TableColumn<RatingEntity, Integer> valueColumn = new TableColumn<>("Rating");
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
-        TableColumn<RatingEntity, LocalDateTime> dateColumn = new TableColumn<>("Date");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-
-        TableColumn<RatingEntity, String> commentColumn = new TableColumn<>("Comment");
-        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
-
-        ratingsTable.getColumns().addAll(valueColumn, dateColumn, commentColumn);
-        ratingsTable.setItems(FXCollections.observableArrayList(
-                ratingDAO.findByShelter(selectedShelter.getId())
-        ));
-
-        VBox content = new VBox(10);
-        content.getChildren().addAll(
-                new Label("Average Rating: " +
-                        String.format("%.2f", ratingDAO.getAverageRating(selectedShelter.getId()))),
-                ratingsTable
-        );
-
-        dialog.getDialogPane().setContent(content);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        dialog.showAndWait();*/
-    }
 }
