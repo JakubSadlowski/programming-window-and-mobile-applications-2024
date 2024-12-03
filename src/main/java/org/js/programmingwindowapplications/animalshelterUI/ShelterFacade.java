@@ -4,10 +4,6 @@ import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
-import org.js.programmingwindowapplications.db.dao.AnimalDAO;
-import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
-import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
-import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -54,11 +50,11 @@ public class ShelterFacade {
     }
 
     public void removeAnimal(String shelterName, Animal animal) {
-        shelterManager.getShelter(shelterName).removeAnimal(animal);
+        shelterManager.removeAnimal(shelterName, animal);
     }
 
     public Animal adoptAnimal(String shelterName, Animal animal) {
-        return shelterManager.getShelter(shelterName).adoptAnimal(animal);
+        return shelterManager.adoptAnimal(shelterName, animal);
     }
 
     public String getShelterPhoneNumber(String shelterName) {

@@ -27,11 +27,11 @@ public class ShelterManager {
     public Map<String, AnimalShelter> getShelters() {
         return shelterDAO.findAll().stream()
                 .filter(shelterEntity -> shelterEntity.getShelterName() != null)
-                .map(this::convertToDomain) // Konwersja z Entity na Domain
+                .map(this::convertToDomain)
                 .collect(Collectors.toMap(
                         AnimalShelter::getShelterName,
-                        shelter -> shelter, // Wartość: obiekt schroniska
-                        (existing, replacement) -> existing // W przypadku duplikatów zachowaj istniejący element
+                        shelter -> shelter,
+                        (existing, replacement) -> existing
                 ));
     }
 
@@ -79,6 +79,7 @@ public class ShelterManager {
         newAnimal.setPrice(price);
         newAnimal.setShelter(shelter);
 
+        animalDAO.save(newAnimal);
         shelter.addAnimal(newAnimal);
         shelterDAO.update(shelter);
     }
@@ -117,6 +118,40 @@ public class ShelterManager {
 
     public void removeShelter(String name) {
         shelterDAO.findByName(name).ifPresent(shelterDAO::delete);
+    }
+
+    public void removeAnimal(String shelterName, Animal animal) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        AnimalEntity animalEntity = shelter.getAnimals().stream()
+                .filter(a -> a.getName().equals(animal.getName()) &&
+                        a.getSpecies().equals(animal.getSpecies()) &&
+                        a.getAge() == animal.getAge())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Animal not found in shelter: " + animal.getName()));
+
+        shelter.getAnimals().remove(animalEntity);
+        shelterDAO.update(shelter);
+    }
+
+    public Animal adoptAnimal(String shelterName, Animal animal) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        AnimalEntity animalEntity = shelter.getAnimals().stream()
+                .filter(a -> a.getName().equals(animal.getName()) &&
+                        a.getSpecies().equals(animal.getSpecies()) &&
+                        a.getAge() == animal.getAge())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Animal not found in shelter: " + animal.getName()));
+
+        animalEntity.setCondition(AnimalCondition.ADOPTED);
+        animalDAO.update(animalEntity);
+        shelter.getAnimals().remove(animalEntity);
+        shelterDAO.update(shelter);
+        animal.setCondition(AnimalCondition.ADOPTED);
+        return animal;
     }
 
     public List<AnimalShelter> findEmpty() {
