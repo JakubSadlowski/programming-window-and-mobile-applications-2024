@@ -1,44 +1,101 @@
-# Animal Shelter Management System
+# **Animal Shelter Management System**
 
-This project is a Java-based Animal Shelter Management System that helps shelters manage animals, track adoptions, and handle various administrative tasks. It features a Graphical User Interface (GUI) for both administrators and clients, providing an intuitive and interactive way to manage shelter data.
+A **Java-based Animal Shelter Management System** designed to assist animal shelters in managing animals, tracking adoptions, and handling various administrative tasks. This project features a **Graphical User Interface (GUI)** for both administrators and clients, providing an intuitive and interactive way to manage shelter data.
 
-## Features
+---
 
-### For Administrators:
-- **Login:** Secure login system to authenticate admin users.
-- **Shelter Management:**
+## **Features**
+
+### **For Administrators**
+- **Login**: Secure login system to authenticate admin users.
+- **Shelter Management**:
   - Add, remove, and modify shelters.
-  - View and manage shelter details like name, phone number, and capacity.
-- **Animal Management:**
+  - View and manage shelter details such as name, phone number, and capacity.
+- **Animal Management**:
   - Add, remove, and modify animal records (name, species, condition, age, and price).
   - Track adoptions and remove adopted animals.
-- **Data Summary:** View detailed summaries of shelter occupancy and animals' information.
+- **Data Summary**: View detailed summaries of shelter occupancy and animals' information.
 
-### For Clients:
-- **View Shelters:** See a list of shelters available.
-- **View Animals:** Browse the animals available for adoption at each shelter.
-- **Adopt Animals:** Choose and adopt an animal from the shelter.
-- **Request Contact:** Easily request contact with a shelter for adoption inquiries.
+### **For Clients**
+- **View Shelters**: Browse a list of available shelters.
+- **View Animals**: Browse the animals available for adoption at each shelter.
+- **Adopt Animals**: Choose and adopt an animal from the shelter.
+- **Request Contact**: Easily request contact with a shelter for adoption inquiries.
 
-## Architecture
+---
 
-The application uses the **Facade Design Pattern** to separate the user interface from the business logic and data management layers. The core components are:
+## **Architecture**
 
-- **AnimalShelter:** Represents a shelter that holds animals and relevant details.
-- **Animal:** Represents an individual animal with details like species, age, and condition.
-- **ShelterManager:** Manages shelters and animals, including adding, removing, and modifying records.
-- **ShelterFacade:** Provides a simplified interface for interacting with shelters and animals.
-- **AccountsManager:** Handles user authentication and login functionality.
+The system utilizes the **Facade Design Pattern** to maintain a clear separation between the user interface and the business logic and data management layers.
 
-## GUI
+### **Core Components**
+- **`AnimalShelter`**: Represents a shelter with animals and relevant details.
+- **`Animal`**: Represents an individual animal with details such as species, age, and condition.
+- **`ShelterManager`**: Manages shelters and animals, including adding, removing, and modifying records.
+- **`ShelterFacade`**: Provides a simplified interface for interacting with shelters and animals.
+- **`AccountsManager`**: Handles user authentication and login functionality.
 
-The user interface is built using **JavaFX**, providing a modern and responsive design. It includes:
-- A login panel for administrators and clients.
-- A shelter and animal list view for browsing available shelters and animals.
-- Forms for adding and modifying shelters and animals.
+---
 
-## Technologies Used
-- **JavaFX:** For building the GUI.
-- **Java:** The main programming language used for the backend logic.
-- **Facade Pattern:** To simplify interaction with the business logic.
-- **Hibernate** Managing database.
+## **Database Integration**
+
+The system uses a **MySQL database** for persistent data storage, ensuring reliable management of shelters and animals. **Hibernate** serves as the ORM (Object-Relational Mapping) tool to simplify database operations.
+
+### **Database Features**
+- **Shelters**:
+  - Stored with details like name, capacity, and phone number.
+  - Linked to animals housed within the shelter.
+- **Animals**:
+  - Stored with details such as name, species, age, condition, and price.
+  - Linked to their respective shelters.
+- **User Authentication**:
+  - Securely stores accounts for administrators and clients.
+
+The DAO (Data Access Object) pattern ensures clean and efficient interaction with the database.
+
+---
+
+## **GUI**
+
+The user interface is developed with **JavaFX**, offering a modern and user-friendly design. Key components include:
+- **Login Panel**: For administrators and clients.
+- **Shelter and Animal List View**: Allows users to browse available shelters and animals.
+- **Forms**: For adding and modifying shelters and animals.
+
+---
+
+## **Technologies Used**
+- **Java**: Backend logic.
+- **JavaFX**: GUI development.
+- **Hibernate**: Database management.
+- **MySQL**: Data persistence.
+- **Facade Pattern**: Simplifies interaction with business logic.
+
+---
+
+## **Getting Started**
+
+### **Prerequisites**
+- Java 11 or higher
+- MySQL server
+- Maven (for project dependencies)
+
+### **Setup Instructions**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/animal-shelter-management.git
+   ```
+2. Set up the MySQL database:
+   - Create a database named `animal_shelter`.
+   - Import the provided schema and data file (if available).
+3. Configure database access in `hibernate.cfg.xml`.
+4. Build the project using Maven:
+   ```bash
+   mvn clean install
+   ```
+5. Run the application:
+   ```bash
+   mvn javafx:run
+   ```
+
+Special thanks to all contributors and open-source libraries that made this project possible.
