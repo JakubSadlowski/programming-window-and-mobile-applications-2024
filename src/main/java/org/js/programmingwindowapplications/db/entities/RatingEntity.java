@@ -22,7 +22,6 @@ public class RatingEntity {
 
     private String comment;
 
-    // Konstruktory
     public RatingEntity() {}
 
     public RatingEntity(int value, AnimalShelterEntity shelter, String comment) {
@@ -32,7 +31,6 @@ public class RatingEntity {
         this.comment = comment;
     }
 
-    // Gettery i settery
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

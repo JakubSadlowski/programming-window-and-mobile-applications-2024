@@ -27,6 +27,8 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
+            System.err.println("Failed to save entity: " + entity);
+            e.printStackTrace();
             throw new RuntimeException("Error saving entity", e);
         }
     }

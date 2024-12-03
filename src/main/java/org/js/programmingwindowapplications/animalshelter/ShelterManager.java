@@ -1,5 +1,7 @@
 package org.js.programmingwindowapplications.animalshelter;
 
+import jakarta.persistence.EntityManager;
+import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.js.programmingwindowapplications.db.dao.AnimalDAO;
 import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
 import org.js.programmingwindowapplications.db.dao.RatingDAO;
@@ -61,12 +63,12 @@ public class ShelterManager {
         ratingDAO.save(rating);
     }
 
-    /*public double getAverageRating(String shelterName) {
+    public double getAverageRating(String shelterName) {
         AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
                 .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
 
         return ratingDAO.getAverageRating(shelter.getId());
-    }*/
+    }
 
     public List<Animal> getAnimalsFromShelter(String shelterName) {
         return shelterDAO.findByName(shelterName)
