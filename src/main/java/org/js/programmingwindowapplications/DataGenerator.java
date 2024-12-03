@@ -1,5 +1,6 @@
 package org.js.programmingwindowapplications;
 
+import jakarta.persistence.EntityManager;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
@@ -8,17 +9,23 @@ import org.js.programmingwindowapplications.animalshelterUI.AdminAccount;
 import org.js.programmingwindowapplications.animalshelterUI.ClientAccount;
 import org.js.programmingwindowapplications.db.dao.AnimalDAO;
 import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.RatingDAO;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
+import org.js.programmingwindowapplications.db.HibernateUtil;
 
 public class DataGenerator {
     private static DataGenerator instance;
     private final AnimalShelterDAO shelterDAO = new AnimalShelterDAOImpl();
     private final AnimalDAO animalDAO = new AnimalDAOImpl();
+    private final RatingDAO ratingDAO;
     private final ShelterManager manager;
 
     private DataGenerator() {
-        this.manager = new ShelterManager(animalDAO, shelterDAO);
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        this.ratingDAO = new RatingDAOImpl(entityManager);
+        this.manager = new ShelterManager(animalDAO, shelterDAO, ratingDAO);
     }
 
     public static synchronized DataGenerator getInstance() {

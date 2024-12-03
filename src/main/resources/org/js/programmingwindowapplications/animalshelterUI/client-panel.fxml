@@ -41,6 +41,7 @@
             <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: red; -fx-text-fill: white;" />
             <Button text="Adopt Animal" onAction="#handleAdoptAnimal" />
             <Button text="Contact Shelter" onAction="#handleContactShelter" />
+            <Button text="Rate Shelter" onAction="#handleRate" />
             <Button text="Sort Shelters by name" onAction="#handleSortSheltersByName" />
         </HBox>
     </bottom>

@@ -2,9 +2,13 @@ package org.js.programmingwindowapplications.animalshelter;
 
 import org.js.programmingwindowapplications.db.dao.AnimalDAO;
 import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.RatingDAO;
+import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
 import org.js.programmingwindowapplications.db.entities.AnimalEntity;
 import org.js.programmingwindowapplications.db.entities.AnimalShelterEntity;
+import org.js.programmingwindowapplications.db.entities.RatingEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,10 +16,12 @@ import java.util.stream.Collectors;
 public class ShelterManager {
     private final AnimalDAO animalDAO;
     private final AnimalShelterDAO shelterDAO;
+    private final RatingDAO ratingDAO;
 
-    public ShelterManager(AnimalDAO animalDAO, AnimalShelterDAO shelterDAO) {
+    public ShelterManager(AnimalDAO animalDAO, AnimalShelterDAO shelterDAO, RatingDAO ratingDAO) {
         this.animalDAO = animalDAO;
         this.shelterDAO = shelterDAO;
+        this.ratingDAO = ratingDAO;
     }
 
     public AnimalShelter getShelter(String name) {
@@ -42,6 +48,25 @@ public class ShelterManager {
                 entity.getPhoneNumber()
         );
     }
+
+    public void addRating(String shelterName, int value, String comment) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        RatingEntity rating = new RatingEntity();
+        rating.setValue(value);
+        rating.setShelter(shelter);
+        rating.setDateTime(LocalDateTime.now());
+        rating.setComment(comment);
+        ratingDAO.save(rating);
+    }
+
+    /*public double getAverageRating(String shelterName) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        return ratingDAO.getAverageRating(shelter.getId());
+    }*/
 
     public List<Animal> getAnimalsFromShelter(String shelterName) {
         return shelterDAO.findByName(shelterName)

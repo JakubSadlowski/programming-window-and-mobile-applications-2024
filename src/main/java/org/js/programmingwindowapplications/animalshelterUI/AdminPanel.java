@@ -1,11 +1,16 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
+import org.js.programmingwindowapplications.db.entities.RatingEntity;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -399,5 +404,74 @@ public class AdminPanel extends AccountPanel {
         } else {
             showAlert("Selection Error", "Please select a shelter to delete.");
         }
+    }
+
+    @FXML
+    private void handleManageData() {
+        /*Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Manage Data");
+
+        ButtonType exportBinary = new ButtonType("Export Binary");
+        ButtonType importBinary = new ButtonType("Import Binary");
+        ButtonType exportCSV = new ButtonType("Export CSV");
+        ButtonType importCSV = new ButtonType("Import CSV");
+        ButtonType close = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().addAll(
+                exportBinary, importBinary, exportCSV, importCSV, close);
+
+        dialog.setResultConverter(button -> {
+            if (button == exportBinary) {
+                shelterFacade.saveToFile("shelters.bin");
+            } else if (button == importBinary) {
+                shelterFacade.loadFromFile("shelters.bin");
+                loadShelters();
+            } else if (button == exportCSV && selectedShelter != null) {
+                shelterFacade.exportToCSV(selectedShelter.getShelterName(),
+                        selectedShelter.getShelterName() + ".csv");
+            }
+            return null;
+        });
+
+        dialog.showAndWait();*/
+    }
+
+    // Rating manager for future implementation
+    @FXML
+    private void handleManageRatings() {
+        /*if (selectedShelter == null) {
+            showAlert("Error", "Please select a shelter");
+            return;
+        }
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Manage Ratings - " + selectedShelter.getShelterName());
+
+        TableView<RatingEntity> ratingsTable = new TableView<>();
+
+        TableColumn<RatingEntity, Integer> valueColumn = new TableColumn<>("Rating");
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+        TableColumn<RatingEntity, LocalDateTime> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+
+        TableColumn<RatingEntity, String> commentColumn = new TableColumn<>("Comment");
+        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+        ratingsTable.getColumns().addAll(valueColumn, dateColumn, commentColumn);
+        ratingsTable.setItems(FXCollections.observableArrayList(
+                ratingDAO.findByShelter(selectedShelter.getId())
+        ));
+
+        VBox content = new VBox(10);
+        content.getChildren().addAll(
+                new Label("Average Rating: " +
+                        String.format("%.2f", ratingDAO.getAverageRating(selectedShelter.getId()))),
+                ratingsTable
+        );
+
+        dialog.getDialogPane().setContent(content);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        dialog.showAndWait();*/
     }
 }

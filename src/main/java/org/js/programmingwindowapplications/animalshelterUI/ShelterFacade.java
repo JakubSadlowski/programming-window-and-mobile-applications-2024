@@ -60,4 +60,8 @@ public class ShelterFacade {
     public String getShelterPhoneNumber(String shelterName) {
         return shelterManager.getShelter(shelterName).getPhoneNumber();
     }
+
+    public void addRating(String shelterName, int value, String comment) {
+        shelterManager.addRating(shelterName, value, comment);
+    }
 }

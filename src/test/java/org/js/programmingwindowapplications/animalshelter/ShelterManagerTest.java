@@ -1,9 +1,13 @@
 package org.js.programmingwindowapplications.animalshelter;
 
+import jakarta.persistence.EntityManager;
+import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.js.programmingwindowapplications.db.dao.AnimalDAO;
 import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.RatingDAO;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +22,15 @@ class ShelterManagerTest {
     private AnimalShelter shelter2;
     private AnimalShelterDAO shelterDAO;
     private AnimalDAO animalDAO;
+    private RatingDAO ratingDAO;
+    EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @BeforeEach
     public void setUp() {
         shelterDAO = new AnimalShelterDAOImpl();
         animalDAO = new AnimalDAOImpl();
-        shelterManager = new ShelterManager(animalDAO, shelterDAO);
+        ratingDAO = new RatingDAOImpl(entityManager);
+        shelterManager = new ShelterManager(animalDAO, shelterDAO, ratingDAO);
         shelter1 = new AnimalShelter("Shelter1", 5, "555-111-222");
         shelter2 = new AnimalShelter("Shelter2", 10, "555-333-444");
 

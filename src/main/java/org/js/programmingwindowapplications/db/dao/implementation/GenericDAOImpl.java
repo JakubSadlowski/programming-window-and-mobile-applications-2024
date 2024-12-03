@@ -7,11 +7,11 @@ import org.js.programmingwindowapplications.db.dao.GenericDAO;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericDAOImpl<T> implements GenericDAO<T> {
-    private final EntityManager entityManager;
-    private final Class<T> entityClass;
+public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
+    protected final EntityManager entityManager;
+    protected final Class<T> entityClass;
 
-    public GenericDAOImpl(EntityManager entityManager, Class<T> entityClass) {
+    protected GenericDAOImpl(EntityManager entityManager, Class<T> entityClass) {
         this.entityManager = entityManager;
         this.entityClass = entityClass;
     }
@@ -24,8 +24,10 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
             entityManager.persist(entity);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
-            throw e;
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Error saving entity", e);
         }
     }
 
@@ -36,7 +38,8 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 
     @Override
     public List<T> findAll() {
-        return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass).getResultList();
+        return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
+                .getResultList();
     }
 
     @Override
@@ -47,8 +50,10 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
             entityManager.merge(entity);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
-            throw e;
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Error updating entity", e);
         }
     }
 
@@ -60,8 +65,10 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
             entityManager.remove(entity);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
-            throw e;
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Error deleting entity", e);
         }
     }
 }
