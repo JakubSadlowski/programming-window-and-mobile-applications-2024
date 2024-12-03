@@ -71,6 +71,15 @@ public class ShelterManager {
         AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
                 .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
 
+        boolean animalExists = shelter.getAnimals().stream()
+                .anyMatch(a -> a.getName().equals(name) &&
+                        a.getSpecies().equals(species) &&
+                        a.getAge() == age);
+
+        if (animalExists) {
+            return;
+        }
+
         AnimalEntity newAnimal = new AnimalEntity();
         newAnimal.setName(name);
         newAnimal.setSpecies(species);

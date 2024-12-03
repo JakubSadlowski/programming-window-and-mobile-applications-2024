@@ -2,7 +2,6 @@ package org.js.programmingwindowapplications;
 
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
-import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.AccountsManager;
 import org.js.programmingwindowapplications.animalshelterUI.AdminAccount;
@@ -14,11 +13,13 @@ import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterD
 
 public class DataGenerator {
     private static DataGenerator instance;
-
     private final AnimalShelterDAO shelterDAO = new AnimalShelterDAOImpl();
     private final AnimalDAO animalDAO = new AnimalDAOImpl();
+    private final ShelterManager manager;
 
-    private DataGenerator() {}
+    private DataGenerator() {
+        this.manager = new ShelterManager(animalDAO, shelterDAO);
+    }
 
     public static synchronized DataGenerator getInstance() {
         if (instance == null) {
@@ -29,16 +30,12 @@ public class DataGenerator {
 
     public AccountsManager addAccounts() {
         AccountsManager accountsManager = new AccountsManager();
-
         accountsManager.addAccount(new AdminAccount());
         accountsManager.addAccount(new ClientAccount("Jakub", "Sadlowski", "sado", "sado"));
-
         return accountsManager;
     }
 
     public ShelterManager addShelters() {
-        ShelterManager manager = new ShelterManager(animalDAO, shelterDAO);
-
         manager.addShelter("Wild Paws", 6, "555-123-456");
         manager.addShelter("Green Meadows", 4, "555-234-567");
         manager.addShelter("Happy Tails Rescue", 5, "555-345-678");
@@ -46,61 +43,57 @@ public class DataGenerator {
         manager.addShelter("Sunset Haven", 3, "555-567-890");
         manager.addShelter("Ocean Breeze Shelter", 8, "555-678-901");
 
-        Animal animal1 = new Animal("Rocky", "Dog", AnimalCondition.HEALTHY, 3, 150.0);
-        Animal animal2 = new Animal("Luna", "Cat", AnimalCondition.UNHEALTHY, 2, 80.0);
-        Animal animal3 = new Animal("Charlie", "Rabbit", AnimalCondition.QUARANTINE, 1, 60.0);
-        Animal animal4 = new Animal("Bella", "Dog", AnimalCondition.HEALTHY, 4, 120.0);
-        Animal animal5 = new Animal("Max", "Cat", AnimalCondition.QUARANTINE, 2, 70.0);
-        Animal animal6 = new Animal("Milo", "Rabbit", AnimalCondition.UNHEALTHY, 3, 50.0);
-        Animal animal7 = new Animal("Zoe", "Dog", AnimalCondition.HEALTHY, 5, 180.0);
-        Animal animal8 = new Animal("Oliver", "Cat", AnimalCondition.HEALTHY, 3, 100.0);
-        Animal animal9 = new Animal("Ruby", "Rabbit", AnimalCondition.QUARANTINE, 2, 65.0);
-        Animal animal10 = new Animal("Socks", "Dog", AnimalCondition.UNHEALTHY, 6, 110.0);
-        Animal animal11 = new Animal("Misty", "Cat", AnimalCondition.HEALTHY, 1, 85.0);
-        Animal animal12 = new Animal("Buddy", "Rabbit", AnimalCondition.HEALTHY, 4, 55.0);
-        Animal animal13 = new Animal("Shadow", "Dog", AnimalCondition.UNHEALTHY, 3, 95.0);
-        Animal animal14 = new Animal("Toby", "Cat", AnimalCondition.HEALTHY, 2, 75.0);
-        Animal animal15 = new Animal("Oscar", "Rabbit", AnimalCondition.QUARANTINE, 2, 50.0);
-        Animal animal16 = new Animal("Lily", "Dog", AnimalCondition.HEALTHY, 4, 140.0);
-        Animal animal17 = new Animal("Daisy", "Cat", AnimalCondition.UNHEALTHY, 3, 60.0);
-        Animal animal18 = new Animal("Leo", "Rabbit", AnimalCondition.QUARANTINE, 1, 45.0);
-        Animal animal19 = new Animal("Coco", "Dog", AnimalCondition.HEALTHY, 4, 130.0);
-        Animal animal20 = new Animal("Chloe", "Cat", AnimalCondition.QUARANTINE, 5, 90.0);
+        addAnimalsToShelter("Wild Paws", new Animal[]{
+                new Animal("Rocky", "Dog", AnimalCondition.HEALTHY, 3, 150.0),
+                new Animal("Luna", "Cat", AnimalCondition.UNHEALTHY, 2, 80.0),
+                new Animal("Charlie", "Rabbit", AnimalCondition.QUARANTINE, 1, 60.0)
+        });
 
-        AnimalShelter shelter1 = manager.getShelters().get("Wild Paws");
-        AnimalShelter shelter2 = manager.getShelters().get("Green Meadows");
-        AnimalShelter shelter3 = manager.getShelters().get("Happy Tails Rescue");
-        AnimalShelter shelter4 = manager.getShelters().get("Forest Friends");
-        AnimalShelter shelter5 = manager.getShelters().get("Sunset Haven");
-        AnimalShelter shelter6 = manager.getShelters().get("Ocean Breeze Shelter");
+        addAnimalsToShelter("Green Meadows", new Animal[]{
+                new Animal("Bella", "Dog", AnimalCondition.HEALTHY, 4, 120.0),
+                new Animal("Max", "Cat", AnimalCondition.QUARANTINE, 2, 70.0),
+                new Animal("Milo", "Rabbit", AnimalCondition.UNHEALTHY, 3, 50.0)
+        });
 
-        shelter1.addAnimal(animal1);
-        shelter1.addAnimal(animal2);
-        shelter1.addAnimal(animal3);
+        addAnimalsToShelter("Happy Tails Rescue", new Animal[]{
+                new Animal("Zoe", "Dog", AnimalCondition.HEALTHY, 5, 180.0),
+                new Animal("Oliver", "Cat", AnimalCondition.HEALTHY, 3, 100.0),
+                new Animal("Ruby", "Rabbit", AnimalCondition.QUARANTINE, 2, 65.0)
+        });
 
-        shelter2.addAnimal(animal4);
-        shelter2.addAnimal(animal5);
-        shelter2.addAnimal(animal6);
+        addAnimalsToShelter("Forest Friends", new Animal[]{
+                new Animal("Socks", "Dog", AnimalCondition.UNHEALTHY, 6, 110.0),
+                new Animal("Misty", "Cat", AnimalCondition.HEALTHY, 1, 85.0),
+                new Animal("Buddy", "Rabbit", AnimalCondition.HEALTHY, 4, 55.0)
+        });
 
-        shelter3.addAnimal(animal7);
-        shelter3.addAnimal(animal8);
-        shelter3.addAnimal(animal9);
+        addAnimalsToShelter("Sunset Haven", new Animal[]{
+                new Animal("Shadow", "Dog", AnimalCondition.UNHEALTHY, 3, 95.0),
+                new Animal("Toby", "Cat", AnimalCondition.HEALTHY, 2, 75.0),
+                new Animal("Oscar", "Rabbit", AnimalCondition.QUARANTINE, 2, 50.0)
+        });
 
-        shelter4.addAnimal(animal10);
-        shelter4.addAnimal(animal11);
-        shelter4.addAnimal(animal12);
-
-        shelter5.addAnimal(animal13);
-        shelter5.addAnimal(animal14);
-        shelter5.addAnimal(animal15);
-
-        shelter6.addAnimal(animal16);
-        shelter6.addAnimal(animal17);
-        shelter6.addAnimal(animal18);
-        shelter6.addAnimal(animal19);
-        shelter6.addAnimal(animal20);
+        addAnimalsToShelter("Ocean Breeze Shelter", new Animal[]{
+                new Animal("Lily", "Dog", AnimalCondition.HEALTHY, 4, 140.0),
+                new Animal("Daisy", "Cat", AnimalCondition.UNHEALTHY, 3, 60.0),
+                new Animal("Leo", "Rabbit", AnimalCondition.QUARANTINE, 1, 45.0),
+                new Animal("Coco", "Dog", AnimalCondition.HEALTHY, 4, 130.0),
+                new Animal("Chloe", "Cat", AnimalCondition.QUARANTINE, 5, 90.0)
+        });
 
         return manager;
     }
-}
 
+    private void addAnimalsToShelter(String shelterName, Animal[] animals) {
+        for (Animal animal : animals) {
+            manager.addAnimal(
+                    shelterName,
+                    animal.getName(),
+                    animal.getSpecies(),
+                    animal.getCondition(),
+                    animal.getAge(),
+                    animal.getPrice()
+            );
+        }
+    }
+}
