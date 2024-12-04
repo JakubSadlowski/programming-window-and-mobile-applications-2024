@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
@@ -52,11 +54,47 @@ public class AccountPanel {
     }
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         stateComboBox.setItems(FXCollections.observableArrayList("All", "HEALTHY", "ADOPTED", "UNHEALTHY", "QUARANTINE"));
         stateComboBox.getSelectionModel().select("All");
         stateComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> applyFilters());
         filterTextField.setOnAction(event -> applyFilters());
+
+        // Configure the shelter list cell factory
+        shelterListView.setCellFactory(listView -> new ListCell<AnimalShelter>() {
+            private final HBox container = new HBox(10);
+            private final VBox shelterInfo = new VBox(5);
+            private final Label nameLabel = new Label();
+            private final Label ratingLabel = new Label();
+
+            {
+                container.getChildren().add(shelterInfo);
+                shelterInfo.getChildren().addAll(nameLabel, ratingLabel);
+            }
+
+            @Override
+            protected void updateItem(AnimalShelter shelter, boolean empty) {
+                super.updateItem(shelter, empty);
+
+                if (empty || shelter == null) {
+                    setGraphic(null);
+                } else {
+                    nameLabel.setText(shelter.getShelterName());
+                    nameLabel.setStyle("-fx-font-weight: bold");
+
+                    // Get rating information from the facade
+                    Map<String, Object> shelterInfo = shelterFacade.getShelterWithRatings(shelter.getShelterName());
+                    double avgRating = (double) shelterInfo.get("averageRating");
+                    long ratingCount = (long) shelterInfo.get("ratingCount");
+
+                    // Format the rating display
+                    String ratingText = String.format("★ %.1f • %d ratings", avgRating, ratingCount);
+                    ratingLabel.setText(ratingText);
+
+                    setGraphic(container);
+                }
+            }
+        });
     }
 
     private void applyFilters() {

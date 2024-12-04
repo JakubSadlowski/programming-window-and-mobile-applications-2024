@@ -8,4 +8,5 @@ public interface RatingDAO extends GenericDAO<RatingEntity> {
     void save(RatingEntity rating);
     List<RatingEntity> findByShelter(Long shelterId);
     double getAverageRating(Long shelterId);
+    long getRatingCount(Long shelterId);
 }

@@ -11,6 +11,7 @@ import org.js.programmingwindowapplications.db.entities.AnimalShelterEntity;
 import org.js.programmingwindowapplications.db.entities.RatingEntity;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,11 +64,16 @@ public class ShelterManager {
         ratingDAO.save(rating);
     }
 
-    public double getAverageRating(String shelterName) {
-        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
-                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+    public Map<String, Object> getShelterWithRatings(String name) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + name));
 
-        return ratingDAO.getAverageRating(shelter.getId());
+        Map<String, Object> shelterInfo = new HashMap<>();
+        shelterInfo.put("shelter", convertToDomain(shelter));
+        shelterInfo.put("averageRating", ratingDAO.getAverageRating(shelter.getId()));
+        shelterInfo.put("ratingCount", ratingDAO.getRatingCount(shelter.getId()));
+
+        return shelterInfo;
     }
 
     public List<Animal> getAnimalsFromShelter(String shelterName) {

@@ -29,4 +29,13 @@ public class RatingDAOImpl extends GenericDAOImpl<RatingEntity> implements Ratin
                 .getSingleResult();
         return average != null ? average : 0.0;
     }
+
+    @Override
+    public long getRatingCount(Long shelterId) {
+        return entityManager.createQuery(
+                        "SELECT COUNT(r) FROM RatingEntity r WHERE r.shelter.id = :shelterId",
+                        Long.class)
+                .setParameter("shelterId", shelterId)
+                .getSingleResult();
+    }
 }

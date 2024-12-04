@@ -64,4 +64,8 @@ public class ShelterFacade {
     public void addRating(String shelterName, int value, String comment) {
         shelterManager.addRating(shelterName, value, comment);
     }
+
+    public Map<String, Object> getShelterWithRatings(String shelterName) {
+        return shelterManager.getShelterWithRatings(shelterName);
+    }
 }
