@@ -14,6 +14,7 @@ import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
 import org.js.programmingwindowapplications.db.HibernateUtil;
+import org.js.programmingwindowapplications.db.entities.AnimalShelterEntity;
 
 public class DataGenerator {
     private static DataGenerator instance;
@@ -88,7 +89,60 @@ public class DataGenerator {
                 new Animal("Chloe", "Cat", AnimalCondition.QUARANTINE, 5, 90.0)
         });
 
+        try {
+            Thread.sleep(100); // Small delay to ensure previous transaction is complete
+            addSampleRatings();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         return manager;
+    }
+
+    public void addSampleRatings() {
+        String[][] ratings = {
+                {"Wild Paws", "5", "Fantastic care for animals, very clean facility!"},
+                {"Wild Paws", "4", "Professional staff, but waiting times can be long"},
+                {"Wild Paws", "5", "Helped us find our perfect companion"},
+                {"Green Meadows", "3", "Decent facility but could use more staff"},
+                {"Green Meadows", "4", "Good selection of animals, caring environment"},
+                {"Green Meadows", "5", "Very knowledgeable about animal care"},
+                {"Happy Tails Rescue", "5", "Best shelter in the area!"},
+                {"Happy Tails Rescue", "5", "Amazing dedication to animal welfare"},
+                {"Happy Tails Rescue", "4", "Great adoption process"},
+                {"Forest Friends", "4", "Nice facility, friendly staff"},
+                {"Forest Friends", "3", "Good but could improve cleanliness"},
+                {"Forest Friends", "5", "They really care about the animals"},
+                {"Sunset Haven", "4", "Wonderful experience adopting our cat"},
+                {"Sunset Haven", "3", "Limited space but good care"},
+                {"Sunset Haven", "4", "Helpful staff, good follow-up"},
+                {"Ocean Breeze Shelter", "5", "Modern facilities, excellent care"},
+                {"Ocean Breeze Shelter", "4", "Great variety of animals"},
+                {"Ocean Breeze Shelter", "5", "Outstanding adoption support"}
+        };
+
+        for (String[] rating : ratings) {
+            try {
+                if (!ratingExists(rating[0], rating[2])) {
+                    manager.addRating(
+                            rating[0],
+                            Integer.parseInt(rating[1]),
+                            rating[2]
+                    );
+                    Thread.sleep(50); // Small delay between ratings to avoid transaction conflicts
+                }
+            } catch (Exception e) {
+                System.err.println("Error adding rating for " + rating[0] + ": " + e.getMessage());
+            }
+        }
+    }
+
+    private boolean ratingExists(String shelterName, String comment) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        return ratingDAO.findByShelter(shelter.getId()).stream()
+                .anyMatch(r -> r.getComment().equals(comment));
     }
 
     private void addAnimalsToShelter(String shelterName, Animal[] animals) {

@@ -28,6 +28,7 @@ public class Main extends Application {
         DataGenerator dataGenerator = DataGenerator.getInstance();
         AccountsManager accountsManager = dataGenerator.addAccounts();
         ShelterManager shelterManager = dataGenerator.addShelters();
+        //dataGenerator.addSampleRatings();
         this.shelterFacade = new ShelterFacade(shelterManager, accountsManager);
         showLoginView();
     }
