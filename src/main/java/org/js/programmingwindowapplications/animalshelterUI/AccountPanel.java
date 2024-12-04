@@ -7,10 +7,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import org.js.programmingwindowapplications.Main;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
@@ -65,11 +68,29 @@ public class AccountPanel {
             private final HBox container = new HBox(10);
             private final VBox shelterInfo = new VBox(5);
             private final Label nameLabel = new Label();
-            private final Label ratingLabel = new Label();
+            private final HBox ratingContainer = new HBox(2);
+            private final Label ratingCountLabel = new Label();
+
+            // SVG definitions for stars
+            private static final String FULL_STAR_SVG =
+                    "M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z";
+            private static final String EMPTY_STAR_SVG =
+                    "M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2ZM12 4.95L9.84 9.16L5.08 9.85L8.54 13.2L7.71 17.94L12 15.79L16.29 17.94L15.46 13.2L18.92 9.85L14.16 9.16L12 4.95Z";
 
             {
                 container.getChildren().add(shelterInfo);
-                shelterInfo.getChildren().addAll(nameLabel, ratingLabel);
+                shelterInfo.getChildren().addAll(nameLabel, ratingContainer, ratingCountLabel);
+                container.setAlignment(Pos.CENTER_LEFT);
+                ratingContainer.setAlignment(Pos.CENTER_LEFT);
+            }
+
+            private SVGPath createStar(boolean filled) {
+                SVGPath star = new SVGPath();
+                star.setContent(filled ? FULL_STAR_SVG : EMPTY_STAR_SVG);
+                star.setFill(Color.GOLD);
+                star.setScaleX(0.8);
+                star.setScaleY(0.8);
+                return star;
             }
 
             @Override
@@ -84,13 +105,27 @@ public class AccountPanel {
 
                     // Get rating information from the facade
                     Map<String, Object> shelterInfo = shelterFacade.getShelterWithRatings(shelter.getShelterName());
-                    double avgRating = (double) shelterInfo.get("averageRating");
+                    double avgRating = Math.round((double) shelterInfo.get("averageRating") * 2) / 2.0; // Round to nearest 0.5
                     long ratingCount = (long) shelterInfo.get("ratingCount");
 
-                    // Format the rating display
-                    String ratingText = String.format("★ %.1f • %d ratings", avgRating, ratingCount);
-                    ratingLabel.setText(ratingText);
+                    // Clear previous stars
+                    ratingContainer.getChildren().clear();
 
+                    // Add full and empty stars
+                    int fullStars = (int) avgRating;
+                    boolean hasHalfStar = avgRating % 1 != 0;
+
+                    // Add full stars
+                    for (int i = 0; i < fullStars; i++) {
+                        ratingContainer.getChildren().add(createStar(true));
+                    }
+
+                    // Add empty stars
+                    for (int i = fullStars + (hasHalfStar ? 1 : 0); i < 5; i++) {
+                        ratingContainer.getChildren().add(createStar(false));
+                    }
+
+                    ratingCountLabel.setText(String.format(" • %d ratings", ratingCount));
                     setGraphic(container);
                 }
             }
