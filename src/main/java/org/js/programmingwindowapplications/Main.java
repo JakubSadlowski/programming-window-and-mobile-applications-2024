@@ -28,7 +28,6 @@ public class Main extends Application {
         DataGenerator dataGenerator = DataGenerator.getInstance();
         AccountsManager accountsManager = dataGenerator.addAccounts();
         ShelterManager shelterManager = dataGenerator.addShelters();
-        //dataGenerator.addSampleRatings();
         this.shelterFacade = new ShelterFacade(shelterManager, accountsManager);
         showLoginView();
     }
@@ -38,7 +37,7 @@ public class Main extends Application {
     }
 
     public void showLoginView() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-panel.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/js/programmingwindowapplications/animalshelterUI/login-panel.fxml"));
         Scene scene = new Scene(loader.load());
 
         LoginPanel controller = loader.getController();

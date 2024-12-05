@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.js.programmingwindowapplications.animalshelterUI.LoginPanel"
+            stylesheets="@styles.css"
+            styleClass="main-container">
+
+   <center>
+      <VBox alignment="CENTER" spacing="20" maxWidth="400">
+         <padding>
+            <Insets top="20" right="40" bottom="20" left="40"/>
+         </padding>
+
+         <Label text="Animal Shelter Login Page"
+                styleClass="header-label"/>
+
+         <VBox spacing="10" styleClass="login-form">
+            <Label text="Username" styleClass="form-label"/>
+            <TextField fx:id="usernameField"
+                       promptText="Enter username"
+                       styleClass="form-field"/>
+
+            <Label text="Password" styleClass="form-label"/>
+            <PasswordField fx:id="passwordField"
+                           promptText="Enter password"
+                           styleClass="form-field"/>
+
+            <Button fx:id="loginButton"
+                    text="Log in"
+                    onAction="#handleLogin"
+                    styleClass="login-button"
+                    maxWidth="Infinity"/>
+         </VBox>
+      </VBox>
+   </center>
+</BorderPane>

@@ -2,48 +2,94 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminPanel">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.js.programmingwindowapplications.animalshelterUI.AdminPanel"
+            stylesheets="@styles.css"
+            styleClass="main-container">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
     <top>
-        <Label text="Admin Panel - Manage Animals and Shelters" style="-fx-font-size: 20;" alignment="CENTER" />
-        <HBox spacing="10" alignment="CENTER">
-            <Label text="Filter by name:" />
-            <TextField fx:id="filterTextField" promptText="Enter filter text..." />
-            <Label text="State:" />
-            <ComboBox fx:id="stateComboBox" />
-        </HBox>
+        <VBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets bottom="20"/>
+            </padding>
+
+            <Label text="Admin Panel - Manage Animals and Shelters"
+                   styleClass="header-label"/>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Label text="Filter by name:" styleClass="filter-label"/>
+                <TextField fx:id="filterTextField"
+                           promptText="Enter filter text..."
+                           prefWidth="200"
+                           styleClass="search-field"/>
+
+                <Label text="State:" styleClass="filter-label"/>
+                <ComboBox fx:id="stateComboBox"
+                          prefWidth="150"
+                          styleClass="combo-box"/>
+            </HBox>
+        </VBox>
     </top>
+
     <center>
-        <HBox spacing="20">
-            <!-- Left side: List of Shelters -->
-            <VBox>
-                <Label text="Shelters" style="-fx-font-size: 16;" />
-                <ListView fx:id="shelterListView" prefWidth="200" />
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+            <VBox spacing="10" HBox.hgrow="ALWAYS" minWidth="200">
+                <Label text="Shelters" styleClass="section-header"/>
+                <ListView fx:id="shelterListView"
+                          VBox.vgrow="ALWAYS"
+                          styleClass="list-view"/>
             </VBox>
-            <!-- Right side: List of Animals -->
-            <VBox>
-                <Label text="Animals" style="-fx-font-size: 16;" />
-                <TableView fx:id="animalTable" prefWidth="500">
+
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Animals" styleClass="section-header"/>
+                <TableView fx:id="animalTable"
+                           VBox.vgrow="ALWAYS"
+                           styleClass="table-view">
                     <columns>
-                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
-                        <TableColumn fx:id="speciesColumn" text="Species" prefWidth="150"/>
-                        <TableColumn fx:id="ageColumn" text="Age" prefWidth="50"/>
-                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100"/>
-                        <TableColumn fx:id="conditionColumn" text="Condition" prefWidth="100"/>
+                        <TableColumn fx:id="nameColumn" text="Name" minWidth="150"/>
+                        <TableColumn fx:id="speciesColumn" text="Species" minWidth="150"/>
+                        <TableColumn fx:id="ageColumn" text="Age" minWidth="50"/>
+                        <TableColumn fx:id="priceColumn" text="Price" minWidth="100"/>
+                        <TableColumn fx:id="conditionColumn" text="Condition" minWidth="100"/>
                     </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
                 </TableView>
             </VBox>
         </HBox>
     </center>
+
     <bottom>
-        <HBox spacing="10" alignment="CENTER">
-            <Button text="Logout" onAction="#handleLogout" style="-fx-background-color: red; -fx-text-fill: white;" />
-            <Button text="Add" onAction="#handleAdd" />
-            <Button text="Edit" onAction="#handleEdit" />
-            <Button text="Delete" onAction="#handleDelete" />
-            <Button text="Sort Shelters by name" onAction="#handleSortSheltersByName" />
-            <Button text="Export/Import file" onAction="#handleManageData" />
+        <HBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20"/>
+            </padding>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    styleClass="danger-button"/>
+            <Button text="Add"
+                    onAction="#handleAdd"
+                    styleClass="action-button"/>
+            <Button text="Edit"
+                    onAction="#handleEdit"
+                    styleClass="action-button"/>
+            <Button text="Delete"
+                    onAction="#handleDelete"
+                    styleClass="action-button"/>
+            <Button text="Sort Shelters by name"
+                    onAction="#handleSortSheltersByName"
+                    styleClass="action-button"/>
+            <Button text="Export/Import file"
+                    onAction="#handleManageData"
+                    styleClass="action-button"/>
         </HBox>
     </bottom>
 </BorderPane>
