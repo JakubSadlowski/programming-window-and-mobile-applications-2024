@@ -1,6 +1,11 @@
 package org.js.programmingwindowapplications.animalshelter;
 
-public class Animal implements Comparable<Animal>{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Animal implements Comparable<Animal>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String name;
     private String species;
     private double price;
@@ -13,6 +18,10 @@ public class Animal implements Comparable<Animal>{
         this.condition = condition;
         this.age = age;
         this.price = price;
+    }
+
+    public Animal() {
+
     }
 
     public String getName() {
