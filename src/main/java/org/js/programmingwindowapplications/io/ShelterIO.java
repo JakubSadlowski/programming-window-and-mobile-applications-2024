@@ -5,6 +5,7 @@ import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShelterIO {
@@ -26,10 +27,10 @@ public class ShelterIO {
         }
     }
 
-    public void exportToCSV(AnimalShelter shelter, String filename) {
+    public void exportToCSV(List<Animal> animals, String filename) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
             writer.println("name,species,condition,age,price");
-            for (Animal animal : shelter.getAnimalList()) {
+            for (Animal animal : animals) {
                 writer.printf("%s,%s,%s,%d,%.2f%n",
                         animal.getName(),
                         animal.getSpecies(),
@@ -39,16 +40,17 @@ public class ShelterIO {
                 );
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error exporting to CSV", e);
+            throw new RuntimeException("Error exporting to CSV: " + e.getMessage(), e);
         }
     }
 
-    public void importFromCSV(String filename, AnimalShelter shelter) {
+    public List<Animal> importFromCSV(String filename) {
+        List<Animal> animals = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line = reader.readLine(); // skip header
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                shelter.addAnimal(new Animal(
+                animals.add(new Animal(
                         parts[0],
                         parts[1],
                         AnimalCondition.valueOf(parts[2]),
@@ -56,8 +58,9 @@ public class ShelterIO {
                         Double.parseDouble(parts[4])
                 ));
             }
+            return animals;
         } catch (IOException e) {
-            throw new RuntimeException("Error importing from CSV", e);
+            throw new RuntimeException("Error importing from CSV: " + e.getMessage(), e);
         }
     }
 }

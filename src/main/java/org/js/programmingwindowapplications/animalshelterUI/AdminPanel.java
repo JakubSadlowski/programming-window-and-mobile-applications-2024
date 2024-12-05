@@ -408,31 +408,31 @@ public class AdminPanel extends AccountPanel {
 
     @FXML
     private void handleManageData() {
-        /*Dialog<Void> dialog = new Dialog<>();
+        Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Manage Data");
 
-        ButtonType exportBinary = new ButtonType("Export Binary");
-        ButtonType importBinary = new ButtonType("Import Binary");
         ButtonType exportCSV = new ButtonType("Export CSV");
         ButtonType importCSV = new ButtonType("Import CSV");
         ButtonType close = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        dialog.getDialogPane().getButtonTypes().addAll(
-                exportBinary, importBinary, exportCSV, importCSV, close);
+        dialog.getDialogPane().getButtonTypes().addAll(exportCSV, importCSV, close);
 
         dialog.setResultConverter(button -> {
-            if (button == exportBinary) {
-                shelterFacade.saveToFile("shelters.bin");
-            } else if (button == importBinary) {
-                shelterFacade.loadFromFile("shelters.bin");
-                loadShelters();
-            } else if (button == exportCSV && selectedShelter != null) {
-                shelterFacade.exportToCSV(selectedShelter.getShelterName(),
-                        selectedShelter.getShelterName() + ".csv");
+            if (button == exportCSV && selectedShelter != null) {
+                shelterFacade.exportShelterToCSV(
+                        selectedShelter.getShelterName(),
+                        selectedShelter.getShelterName() + ".csv"
+                );
+            } else if (button == importCSV && selectedShelter != null) {
+                shelterFacade.importShelterFromCSV(
+                        selectedShelter.getShelterName(),
+                        selectedShelter.getShelterName() + ".csv"
+                );
+                loadAnimals(selectedShelter);
             }
             return null;
         });
 
-        dialog.showAndWait();*/
+        dialog.showAndWait();
     }
 }

@@ -43,6 +43,7 @@
             <Button text="Edit" onAction="#handleEdit" />
             <Button text="Delete" onAction="#handleDelete" />
             <Button text="Sort Shelters by name" onAction="#handleSortSheltersByName" />
+            <Button text="Export/Import file" onAction="#handleManageData" />
         </HBox>
     </bottom>
 </BorderPane>

@@ -68,4 +68,12 @@ public class ShelterFacade {
     public Map<String, Object> getShelterWithRatings(String shelterName) {
         return shelterManager.getShelterWithRatings(shelterName);
     }
+
+    public void exportShelterToCSV(String shelterName, String filename) {
+        shelterManager.exportShelterToCSV(shelterName, filename);
+    }
+
+    public void importShelterFromCSV(String shelterName, String filename) {
+        shelterManager.importShelterFromCSV(shelterName, filename);
+    }
 }

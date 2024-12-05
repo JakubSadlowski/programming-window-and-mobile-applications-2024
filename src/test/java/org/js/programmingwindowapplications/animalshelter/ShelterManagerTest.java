@@ -8,6 +8,7 @@ import org.js.programmingwindowapplications.db.dao.RatingDAO;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
 import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
+import org.js.programmingwindowapplications.io.ShelterIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ class ShelterManagerTest {
     private AnimalShelterDAO shelterDAO;
     private AnimalDAO animalDAO;
     private RatingDAO ratingDAO;
+    private final ShelterIO shelterIO = new ShelterIO();
     EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @BeforeEach
@@ -30,7 +32,7 @@ class ShelterManagerTest {
         shelterDAO = new AnimalShelterDAOImpl();
         animalDAO = new AnimalDAOImpl();
         ratingDAO = new RatingDAOImpl(entityManager);
-        shelterManager = new ShelterManager(animalDAO, shelterDAO, ratingDAO);
+        shelterManager = new ShelterManager(animalDAO, shelterDAO, ratingDAO, shelterIO);
         shelter1 = new AnimalShelter("Shelter1", 5, "555-111-222");
         shelter2 = new AnimalShelter("Shelter2", 10, "555-333-444");
 

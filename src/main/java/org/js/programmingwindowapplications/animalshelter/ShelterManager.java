@@ -9,6 +9,7 @@ import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
 import org.js.programmingwindowapplications.db.entities.AnimalEntity;
 import org.js.programmingwindowapplications.db.entities.AnimalShelterEntity;
 import org.js.programmingwindowapplications.db.entities.RatingEntity;
+import org.js.programmingwindowapplications.io.ShelterIO;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -20,11 +21,13 @@ public class ShelterManager {
     private final AnimalDAO animalDAO;
     private final AnimalShelterDAO shelterDAO;
     private final RatingDAO ratingDAO;
+    private final ShelterIO shelterIO;
 
-    public ShelterManager(AnimalDAO animalDAO, AnimalShelterDAO shelterDAO, RatingDAO ratingDAO) {
+    public ShelterManager(AnimalDAO animalDAO, AnimalShelterDAO shelterDAO, RatingDAO ratingDAO, ShelterIO shelterIO) {
         this.animalDAO = animalDAO;
         this.shelterDAO = shelterDAO;
         this.ratingDAO = ratingDAO;
+        this.shelterIO = shelterIO;
     }
 
     public AnimalShelter getShelter(String name) {
@@ -42,6 +45,33 @@ public class ShelterManager {
                         shelter -> shelter,
                         (existing, replacement) -> existing
                 ));
+    }
+
+    public void exportShelterToCSV(String shelterName, String filename) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        List<Animal> animals = shelter.getAnimals().stream()
+                .map(AnimalEntity::toAnimal)
+                .collect(Collectors.toList());
+
+        shelterIO.exportToCSV(animals, filename);
+    }
+
+    public void importShelterFromCSV(String shelterName, String filename) {
+        AnimalShelterEntity shelter = shelterDAO.findByName(shelterName)
+                .orElseThrow(() -> new IllegalArgumentException("Shelter not found: " + shelterName));
+
+        List<Animal> animals = shelterIO.importFromCSV(filename);
+
+        for (Animal animal : animals) {
+            addAnimal(shelterName,
+                    animal.getName(),
+                    animal.getSpecies(),
+                    animal.getCondition(),
+                    animal.getAge(),
+                    animal.getPrice());
+        }
     }
 
     private AnimalShelter convertToDomain(AnimalShelterEntity entity) {

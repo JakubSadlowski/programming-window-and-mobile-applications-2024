@@ -15,6 +15,7 @@ import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterD
 import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
 import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.js.programmingwindowapplications.db.entities.AnimalShelterEntity;
+import org.js.programmingwindowapplications.io.ShelterIO;
 
 public class DataGenerator {
     private static DataGenerator instance;
@@ -22,11 +23,12 @@ public class DataGenerator {
     private final AnimalDAO animalDAO = new AnimalDAOImpl();
     private final RatingDAO ratingDAO;
     private final ShelterManager manager;
+    private final ShelterIO shelterIO = new ShelterIO();
 
     private DataGenerator() {
         EntityManager entityManager = HibernateUtil.getEntityManager();
         this.ratingDAO = new RatingDAOImpl(entityManager);
-        this.manager = new ShelterManager(animalDAO, shelterDAO, ratingDAO);
+        this.manager = new ShelterManager(animalDAO, shelterDAO, ratingDAO, shelterIO);
     }
 
     public static synchronized DataGenerator getInstance() {
