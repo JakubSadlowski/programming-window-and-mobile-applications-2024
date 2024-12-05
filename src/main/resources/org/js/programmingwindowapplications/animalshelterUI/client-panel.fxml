@@ -45,6 +45,7 @@
             <Button text="Contact Shelter" onAction="#handleContactShelter" />
             <Button text="Rate Shelter" onAction="#handleRate" />
             <Button text="Sort Shelters by name" onAction="#handleSortSheltersByName" />
+            <Button text="Export/Import file" onAction="#handleManageData" />
         </HBox>
     </bottom>
 </BorderPane>

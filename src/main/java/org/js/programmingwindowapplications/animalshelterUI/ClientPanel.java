@@ -12,7 +12,8 @@ import java.util.Optional;
 
 public class ClientPanel extends AccountPanel {
 
-    public void handleAdoptAnimal() {
+    @FXML
+    private void handleAdoptAnimal() {
         Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
         if (selectedAnimal == null) {
@@ -53,7 +54,8 @@ public class ClientPanel extends AccountPanel {
         }
     }
 
-    public void handleContactShelter() {
+    @FXML
+    private void handleContactShelter() {
         if (selectedShelter != null) {
             String shelterName = selectedShelter.getShelterName();
             String phone = shelterFacade.getShelterPhoneNumber(shelterName);

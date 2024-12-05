@@ -220,7 +220,7 @@ public class ShelterManager {
 
         animalEntity.setCondition(AnimalCondition.ADOPTED);
         animalDAO.update(animalEntity);
-        shelter.getAnimals().remove(animalEntity);
+        //shelter.getAnimals().remove(animalEntity);
         shelterDAO.update(shelter);
         animal.setCondition(AnimalCondition.ADOPTED);
         return animal;

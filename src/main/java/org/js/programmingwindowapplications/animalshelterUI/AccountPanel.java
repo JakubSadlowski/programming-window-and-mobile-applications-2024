@@ -63,7 +63,6 @@ public class AccountPanel {
         stateComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> applyFilters());
         filterTextField.setOnAction(event -> applyFilters());
 
-        // Configure the shelter list cell factory
         shelterListView.setCellFactory(listView -> new ListCell<AnimalShelter>() {
             private final HBox container = new HBox(10);
             private final VBox shelterInfo = new VBox(5);
@@ -172,14 +171,6 @@ public class AccountPanel {
         }
     }
 
-    @FXML
-    private void handleSortSheltersByName() {
-        if (shelterData != null) {
-            shelterData.sort(Comparator.comparing(AnimalShelter::getShelterName));
-            shelterListView.setItems(shelterData);
-        }
-    }
-
     public void loadShelters() {
         shelterData.clear();
         Map<String, AnimalShelter> sheltersMap = shelterFacade.getShelters();
@@ -213,6 +204,14 @@ public class AccountPanel {
     }
 
     @FXML
+    private void handleSortSheltersByName() {
+        if (shelterData != null) {
+            shelterData.sort(Comparator.comparing(AnimalShelter::getShelterName));
+            shelterListView.setItems(shelterData);
+        }
+    }
+
+    @FXML
     protected void handleLogout() {
         try {
             if (mainApp != null) {
@@ -226,6 +225,35 @@ public class AccountPanel {
         }
     }
 
+    @FXML
+    protected void handleManageData() {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Manage Data");
+
+        ButtonType exportCSV = new ButtonType("Export CSV");
+        ButtonType importCSV = new ButtonType("Import CSV");
+        ButtonType close = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().addAll(exportCSV, importCSV, close);
+
+        dialog.setResultConverter(button -> {
+            if (button == exportCSV && selectedShelter != null) {
+                shelterFacade.exportShelterToCSV(
+                        selectedShelter.getShelterName(),
+                        selectedShelter.getShelterName() + ".csv"
+                );
+            } else if (button == importCSV && selectedShelter != null) {
+                shelterFacade.importShelterFromCSV(
+                        selectedShelter.getShelterName(),
+                        selectedShelter.getShelterName() + ".csv"
+                );
+                loadAnimals(selectedShelter);
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
 
     protected void showAlert(String title, String message) {
         Alert alert = new Alert(AlertType.WARNING);

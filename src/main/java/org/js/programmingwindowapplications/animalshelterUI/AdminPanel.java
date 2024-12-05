@@ -1,16 +1,11 @@
 package org.js.programmingwindowapplications.animalshelterUI;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
-import org.js.programmingwindowapplications.db.entities.RatingEntity;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -354,14 +349,14 @@ public class AdminPanel extends AccountPanel {
 
         choiceDialog.showAndWait().ifPresent(choice -> {
             if (choice == deleteAnimalButton) {
-                handleDeleteAnimal();
+                deleteAnimal();
             } else if (choice == deleteShelterButton) {
-                handleDeleteShelter();
+                deleteShelter();
             }
         });
     }
 
-    private void handleDeleteAnimal() {
+    private void deleteAnimal() {
         selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
         if (selectedAnimal != null) {
@@ -384,7 +379,7 @@ public class AdminPanel extends AccountPanel {
         }
     }
 
-    private void handleDeleteShelter() {
+    private void deleteShelter() {
         if (selectedShelter != null) {
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Delete Confirmation");
@@ -404,35 +399,5 @@ public class AdminPanel extends AccountPanel {
         } else {
             showAlert("Selection Error", "Please select a shelter to delete.");
         }
-    }
-
-    @FXML
-    private void handleManageData() {
-        Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle("Manage Data");
-
-        ButtonType exportCSV = new ButtonType("Export CSV");
-        ButtonType importCSV = new ButtonType("Import CSV");
-        ButtonType close = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        dialog.getDialogPane().getButtonTypes().addAll(exportCSV, importCSV, close);
-
-        dialog.setResultConverter(button -> {
-            if (button == exportCSV && selectedShelter != null) {
-                shelterFacade.exportShelterToCSV(
-                        selectedShelter.getShelterName(),
-                        selectedShelter.getShelterName() + ".csv"
-                );
-            } else if (button == importCSV && selectedShelter != null) {
-                shelterFacade.importShelterFromCSV(
-                        selectedShelter.getShelterName(),
-                        selectedShelter.getShelterName() + ".csv"
-                );
-                loadAnimals(selectedShelter);
-            }
-            return null;
-        });
-
-        dialog.showAndWait();
     }
 }
