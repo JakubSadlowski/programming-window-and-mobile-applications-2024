@@ -349,14 +349,14 @@ public class AdminPanel extends AccountPanel {
 
         choiceDialog.showAndWait().ifPresent(choice -> {
             if (choice == deleteAnimalButton) {
-                handleDeleteAnimal();
+                deleteAnimal();
             } else if (choice == deleteShelterButton) {
-                handleDeleteShelter();
+                deleteShelter();
             }
         });
     }
 
-    private void handleDeleteAnimal() {
+    private void deleteAnimal() {
         selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
         if (selectedAnimal != null) {
@@ -379,7 +379,7 @@ public class AdminPanel extends AccountPanel {
         }
     }
 
-    private void handleDeleteShelter() {
+    private void deleteShelter() {
         if (selectedShelter != null) {
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("Delete Confirmation");

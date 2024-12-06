@@ -50,14 +50,30 @@ public class ShelterFacade {
     }
 
     public void removeAnimal(String shelterName, Animal animal) {
-        shelterManager.getShelter(shelterName).removeAnimal(animal);
+        shelterManager.removeAnimal(shelterName, animal);
     }
 
     public Animal adoptAnimal(String shelterName, Animal animal) {
-        return shelterManager.getShelter(shelterName).adoptAnimal(animal);
+        return shelterManager.adoptAnimal(shelterName, animal);
     }
 
     public String getShelterPhoneNumber(String shelterName) {
         return shelterManager.getShelter(shelterName).getPhoneNumber();
+    }
+
+    public void addRating(String shelterName, int value, String comment) {
+        shelterManager.addRating(shelterName, value, comment);
+    }
+
+    public Map<String, Object> getShelterWithRatings(String shelterName) {
+        return shelterManager.getShelterWithRatings(shelterName);
+    }
+
+    public void exportShelterToCSV(String shelterName, String filename) {
+        shelterManager.exportShelterToCSV(shelterName, filename);
+    }
+
+    public void importShelterFromCSV(String shelterName, String filename) {
+        shelterManager.importShelterFromCSV(shelterName, filename);
     }
 }

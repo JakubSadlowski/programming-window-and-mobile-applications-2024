@@ -2,10 +2,8 @@ package org.js.programmingwindowapplications.animalshelterUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import org.js.programmingwindowapplications.animalshelter.Animal;
 import org.js.programmingwindowapplications.animalshelter.AnimalCondition;
 import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
@@ -14,7 +12,8 @@ import java.util.Optional;
 
 public class ClientPanel extends AccountPanel {
 
-    public void handleAdoptAnimal() {
+    @FXML
+    private void handleAdoptAnimal() {
         Animal selectedAnimal = animalTable.getSelectionModel().getSelectedItem();
 
         if (selectedAnimal == null) {
@@ -55,7 +54,8 @@ public class ClientPanel extends AccountPanel {
         }
     }
 
-    public void handleContactShelter() {
+    @FXML
+    private void handleContactShelter() {
         if (selectedShelter != null) {
             String shelterName = selectedShelter.getShelterName();
             String phone = shelterFacade.getShelterPhoneNumber(shelterName);
@@ -70,5 +70,55 @@ public class ClientPanel extends AccountPanel {
         } else {
             showAlert("Contact Error", "Please select a shelter to contact.");
         }
+    }
+
+    @FXML
+    private void handleRate() {
+        if (selectedShelter == null) {
+            showAlert("Error", "Please select a shelter to rate");
+            return;
+        }
+
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Rate Shelter - " + selectedShelter.getShelterName());
+        dialog.setHeaderText("Please rate your experience");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        // Rating value spinner
+        Spinner<Integer> ratingSpinner = new Spinner<>(0, 5, 3);
+        ratingSpinner.setEditable(true);
+
+        // Comment area
+        TextArea commentArea = new TextArea();
+        commentArea.setPromptText("Enter your comment here...");
+        commentArea.setPrefRowCount(3);
+
+        grid.add(new Label("Rating (0-5):"), 0, 0);
+        grid.add(ratingSpinner, 1, 0);
+        grid.add(new Label("Comment:"), 0, 1);
+        grid.add(commentArea, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        ButtonType submitButton = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButton, ButtonType.CANCEL);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == submitButton) {
+                shelterFacade.addRating(
+                        selectedShelter.getShelterName(),
+                        ratingSpinner.getValue(),
+                        commentArea.getText().trim()
+                );
+
+                showAlert("Success", "Rating submitted successfully");
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
     }
 }

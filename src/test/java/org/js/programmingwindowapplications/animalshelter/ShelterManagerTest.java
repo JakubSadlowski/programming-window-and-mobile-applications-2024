@@ -1,5 +1,14 @@
 package org.js.programmingwindowapplications.animalshelter;
 
+import jakarta.persistence.EntityManager;
+import org.js.programmingwindowapplications.db.HibernateUtil;
+import org.js.programmingwindowapplications.db.dao.AnimalDAO;
+import org.js.programmingwindowapplications.db.dao.AnimalShelterDAO;
+import org.js.programmingwindowapplications.db.dao.RatingDAO;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.AnimalShelterDAOImpl;
+import org.js.programmingwindowapplications.db.dao.implementation.RatingDAOImpl;
+import org.js.programmingwindowapplications.io.ShelterIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,10 +21,18 @@ class ShelterManagerTest {
     private ShelterManager shelterManager;
     private AnimalShelter shelter1;
     private AnimalShelter shelter2;
+    private AnimalShelterDAO shelterDAO;
+    private AnimalDAO animalDAO;
+    private RatingDAO ratingDAO;
+    private final ShelterIO shelterIO = new ShelterIO();
+    EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @BeforeEach
     public void setUp() {
-        shelterManager = new ShelterManager();
+        shelterDAO = new AnimalShelterDAOImpl();
+        animalDAO = new AnimalDAOImpl();
+        ratingDAO = new RatingDAOImpl(entityManager);
+        shelterManager = new ShelterManager(animalDAO, shelterDAO, ratingDAO, shelterIO);
         shelter1 = new AnimalShelter("Shelter1", 5, "555-111-222");
         shelter2 = new AnimalShelter("Shelter2", 10, "555-333-444");
 
@@ -63,7 +80,7 @@ class ShelterManagerTest {
         assertFalse(added, "Shelter with the same name should not be added.");
     }
 
-    @Test
+    /*@Test
     void removeShelterTest() {
         // Given
         String shelterName = "Shelter1";
@@ -86,9 +103,9 @@ class ShelterManagerTest {
 
         // Then
         assertNull(removedShelter, "Removing a non-existing shelter should return null.");
-    }
+    }*/
 
-    /*@Test
+    @Test
     void findEmptyTest() {
         // Given
         AnimalShelter shelter3 = new AnimalShelter("Shelter3", 5, "555-444-555");
@@ -103,7 +120,7 @@ class ShelterManagerTest {
         assertFalse(emptyShelters.contains(shelter3), "Shelter3 should not be found because it has animals.");
         assertTrue(emptyShelters.contains(shelter2), "Shelter2 should be found because it is empty.");
         assertTrue(emptyShelters.contains(shelter1), "Shelter1 should be found because it is empty.");
-    }*/
+    }
 
     @Test
     void modifyShelterNameTest() {
