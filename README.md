@@ -97,5 +97,3 @@ The user interface is developed with **JavaFX**, offering a modern and user-frie
    ```bash
    mvn javafx:run
    ```
-
-Special thanks to all contributors and open-source libraries that made this project possible.
