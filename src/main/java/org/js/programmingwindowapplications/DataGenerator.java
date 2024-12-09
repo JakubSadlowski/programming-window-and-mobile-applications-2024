@@ -26,8 +26,8 @@ public class DataGenerator {
     private final ShelterIO shelterIO = new ShelterIO();
 
     private DataGenerator() {
-        EntityManager entityManager = HibernateUtil.getEntityManager();
-        this.ratingDAO = new RatingDAOImpl(entityManager);
+        //EntityManager entityManager = HibernateUtil.getEntityManager();
+        this.ratingDAO = new RatingDAOImpl();
         this.manager = new ShelterManager(animalDAO, shelterDAO, ratingDAO, shelterIO);
     }
 
