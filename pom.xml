@@ -55,6 +55,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.5.2.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>6.2.7.Final</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- MySQL Connector -->
         <dependency>
             <groupId>mysql</groupId>

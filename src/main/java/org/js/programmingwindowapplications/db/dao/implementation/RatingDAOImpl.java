@@ -1,5 +1,8 @@
 package org.js.programmingwindowapplications.db.dao.implementation;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.js.programmingwindowapplications.db.dao.RatingDAO;
 import org.js.programmingwindowapplications.db.entities.RatingEntity;
@@ -14,11 +17,15 @@ public class RatingDAOImpl extends GenericDAOImpl<RatingEntity> implements Ratin
     @Override
     public List<RatingEntity> findByShelter(Long shelterId) {
         try (Session session = getSession()) {
-            return session.createQuery(
-                            "FROM RatingEntity WHERE shelter.id = :shelterId ORDER BY dateTime DESC",
-                            RatingEntity.class)
-                    .setParameter("shelterId", shelterId)
-                    .list();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<RatingEntity> query = cb.createQuery(RatingEntity.class);
+            Root<RatingEntity> rating = query.from(RatingEntity.class);
+
+            query.select(rating)
+                    .where(cb.equal(rating.get("shelter").get("id"), shelterId))
+                    .orderBy(cb.desc(rating.get("dateTime")));
+
+            return session.createQuery(query).getResultList();
         }
     }
 
