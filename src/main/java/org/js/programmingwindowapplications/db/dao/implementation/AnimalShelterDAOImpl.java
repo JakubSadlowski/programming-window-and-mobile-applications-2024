@@ -12,15 +12,6 @@ import java.util.Optional;
 public class AnimalShelterDAOImpl implements AnimalShelterDAO {
 
     @Override
-    public Optional<AnimalShelterEntity> findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(AnimalShelterEntity.class, id));
-        } catch (Exception e) {
-            throw new RuntimeException("Error finding shelter by ID: " + id, e);
-        }
-    }
-
-    @Override
     public List<AnimalShelterEntity> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM AnimalShelterEntity", AnimalShelterEntity.class).list();

@@ -10,42 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class AnimalDAOImpl implements AnimalDAO {
-    @Override
-    public Optional<AnimalEntity> findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(AnimalEntity.class, id));
-        }
-    }
 
     @Override
     public List<AnimalEntity> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from AnimalEntity", AnimalEntity.class).list();
-        }
-    }
-
-    @Override
-    public List<AnimalEntity> findByShelter(Long shelterId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(
-                            "from AnimalEntity where shelter.id = :shelterId",
-                            AnimalEntity.class
-                    )
-                    .setParameter("shelterId", shelterId)
-                    .list();
-        }
-    }
-
-    @Override
-    public Optional<AnimalEntity> findByNameAndShelterId(String name, Long shelterId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(
-                            "from AnimalEntity where name = :name and shelter.id = :shelterId",
-                            AnimalEntity.class
-                    )
-                    .setParameter("name", name)
-                    .setParameter("shelterId", shelterId)
-                    .uniqueResultOptional();
         }
     }
 

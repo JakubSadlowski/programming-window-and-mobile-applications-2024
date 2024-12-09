@@ -33,13 +33,6 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
     @Override
-    public Optional<T> findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(entityClass, id));
-        }
-    }
-
-    @Override
     public List<T> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM " + entityClass.getSimpleName(), entityClass)

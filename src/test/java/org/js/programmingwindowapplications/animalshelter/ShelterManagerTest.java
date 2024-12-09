@@ -25,13 +25,12 @@ class ShelterManagerTest {
     private AnimalDAO animalDAO;
     private RatingDAO ratingDAO;
     private final ShelterIO shelterIO = new ShelterIO();
-    EntityManager entityManager = HibernateUtil.getEntityManager();
 
     @BeforeEach
     public void setUp() {
         shelterDAO = new AnimalShelterDAOImpl();
         animalDAO = new AnimalDAOImpl();
-        ratingDAO = new RatingDAOImpl(entityManager);
+        ratingDAO = new RatingDAOImpl();
         shelterManager = new ShelterManager(animalDAO, shelterDAO, ratingDAO, shelterIO);
         shelter1 = new AnimalShelter("Shelter1", 5, "555-111-222");
         shelter2 = new AnimalShelter("Shelter2", 10, "555-333-444");
