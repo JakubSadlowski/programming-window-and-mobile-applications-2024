@@ -1,8 +1,6 @@
 package org.js.programmingwindowapplications.db.dao.implementation;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.hibernate.Session;
 import org.js.programmingwindowapplications.db.dao.RatingDAO;
 import org.js.programmingwindowapplications.db.entities.RatingEntity;
@@ -32,11 +30,14 @@ public class RatingDAOImpl extends GenericDAOImpl<RatingEntity> implements Ratin
     @Override
     public double getAverageRating(Long shelterId) {
         try (Session session = getSession()) {
-            Double average = session.createQuery(
-                            "SELECT AVG(r.value) FROM RatingEntity r WHERE r.shelter.id = :shelterId",
-                            Double.class)
-                    .setParameter("shelterId", shelterId)
-                    .uniqueResult();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Double> query = cb.createQuery(Double.class);
+            Root<RatingEntity> rating = query.from(RatingEntity.class);
+
+            query.select(cb.avg(rating.get("value")))
+                    .where(cb.equal(rating.get("shelter").get("id"), shelterId));
+
+            Double average = session.createQuery(query).uniqueResult();
             return average != null ? average : 0.0;
         }
     }
@@ -44,11 +45,14 @@ public class RatingDAOImpl extends GenericDAOImpl<RatingEntity> implements Ratin
     @Override
     public long getRatingCount(Long shelterId) {
         try (Session session = getSession()) {
-            return session.createQuery(
-                            "SELECT COUNT(r) FROM RatingEntity r WHERE r.shelter.id = :shelterId",
-                            Long.class)
-                    .setParameter("shelterId", shelterId)
-                    .uniqueResult();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Long> query = cb.createQuery(Long.class);
+            Root<RatingEntity> rating = query.from(RatingEntity.class);
+
+            query.select(cb.count(rating))
+                    .where(cb.equal(rating.get("shelter").get("id"), shelterId));
+
+            return session.createQuery(query).uniqueResult();
         }
     }
 }
