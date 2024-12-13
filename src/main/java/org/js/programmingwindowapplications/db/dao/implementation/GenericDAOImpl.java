@@ -5,8 +5,10 @@ import org.hibernate.Transaction;
 import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.js.programmingwindowapplications.db.dao.GenericDAO;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     protected final Class<T> entityClass;
@@ -26,8 +28,6 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            System.err.println("Failed to save entity: " + entity);
-            e.printStackTrace();
             throw new RuntimeException("Error saving entity", e);
         }
     }
@@ -35,8 +35,11 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     @Override
     public List<T> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM " + entityClass.getSimpleName(), entityClass)
-                    .list();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<T> query = cb.createQuery(entityClass);
+            Root<T> root = query.from(entityClass);
+            query.select(root);
+            return session.createQuery(query).getResultList();
         }
     }
 
