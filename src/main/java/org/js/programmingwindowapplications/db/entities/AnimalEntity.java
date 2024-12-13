@@ -26,14 +26,6 @@ public class AnimalEntity {
 
     public AnimalEntity() {}
 
-    public AnimalEntity(Animal animal) {
-        this.name = animal.getName();
-        this.species = animal.getSpecies();
-        this.price = animal.getPrice();
-        this.age = animal.getAge();
-        this.condition = animal.getCondition();
-    }
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
