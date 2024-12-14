@@ -1,5 +1,10 @@
 # **Animal Shelter Management System**
 
+![JavaFX](https://img.shields.io/badge/JavaFX-Technology-blue?style=for-the-badge)
+
+This project is an Animal Shelter Management System built using JavaFX for the user interface.
+
+
 A **Java-based Animal Shelter Management System** designed to assist animal shelters in managing animals, tracking adoptions, and handling various administrative tasks. This project features a **Graphical User Interface (GUI)** for both administrators and clients, providing an intuitive and interactive way to manage shelter data.
 
 ---

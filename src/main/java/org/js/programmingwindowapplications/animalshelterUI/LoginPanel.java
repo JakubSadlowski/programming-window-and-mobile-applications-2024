@@ -9,7 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import org.js.programmingwindowapplications.Main;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class LoginPanel {
     @FXML
     private TextField usernameField;

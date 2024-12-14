@@ -10,15 +10,26 @@ import org.js.programmingwindowapplications.animalshelter.AnimalShelter;
 import org.js.programmingwindowapplications.animalshelter.ShelterManager;
 import org.js.programmingwindowapplications.animalshelterUI.*;
 import org.js.programmingwindowapplications.db.HibernateUtil;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 public class Main extends Application {
     private Stage primaryStage;
     private ShelterFacade shelterFacade;
     private static Main instance;
 
+    private static ConfigurableApplicationContext springContext;
+
     public static void main(String[] args) {
         HibernateUtil.testConnection();
         launch(args);
+    }
+
+    @Override
+    public void init() throws Exception {
+        // Start Spring Boot in a separate thread
+        springContext = SpringApplication.run(AnimalShelterApplication.class);
     }
 
     @Override
@@ -47,5 +58,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Animal Shelter Login");
         primaryStage.show();
+    }
+
+    @SpringBootApplication
+    public static class AnimalShelterApplication {
+        public static void main(String[] args) {
+            // This method is not used because Spring Boot is already launched by the JavaFX init method
+        }
     }
 }
