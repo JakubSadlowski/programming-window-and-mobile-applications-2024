@@ -1,93 +1,29 @@
 package org.js.programmingwindowapplications.db.dao.implementation;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.js.programmingwindowapplications.db.entities.AnimalEntity;
 import org.js.programmingwindowapplications.db.dao.AnimalDAO;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
-import java.util.Optional;
 
-public class AnimalDAOImpl implements AnimalDAO {
-    @Override
-    public Optional<AnimalEntity> findById(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(AnimalEntity.class, id));
-        }
+public class AnimalDAOImpl extends GenericDAOImpl<AnimalEntity> implements AnimalDAO {
+
+    public AnimalDAOImpl() {
+        super(AnimalEntity.class);
     }
 
     @Override
     public List<AnimalEntity> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from AnimalEntity", AnimalEntity.class).list();
-        }
-    }
-
-    @Override
-    public List<AnimalEntity> findByShelter(Long shelterId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(
-                            "from AnimalEntity where shelter.id = :shelterId",
-                            AnimalEntity.class
-                    )
-                    .setParameter("shelterId", shelterId)
-                    .list();
-        }
-    }
-
-    @Override
-    public Optional<AnimalEntity> findByNameAndShelterId(String name, Long shelterId) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(
-                            "from AnimalEntity where name = :name and shelter.id = :shelterId",
-                            AnimalEntity.class
-                    )
-                    .setParameter("name", name)
-                    .setParameter("shelterId", shelterId)
-                    .uniqueResultOptional();
-        }
-    }
-
-    @Override
-    public void save(AnimalEntity entity) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction tx = session.beginTransaction();
-            try {
-                session.persist(entity);
-                tx.commit();
-            } catch (Exception e) {
-                tx.rollback();
-                throw e;
-            }
-        }
-    }
-
-    @Override
-    public void update(AnimalEntity entity) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction tx = session.beginTransaction();
-            try {
-                session.merge(entity);
-                tx.commit();
-            } catch (Exception e) {
-                tx.rollback();
-                throw e;
-            }
-        }
-    }
-
-    @Override
-    public void delete(AnimalEntity entity) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction tx = session.beginTransaction();
-            try {
-                session.remove(entity);
-                tx.commit();
-            } catch (Exception e) {
-                tx.rollback();
-                throw e;
-            }
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<AnimalEntity> query = cb.createQuery(AnimalEntity.class);
+            Root<AnimalEntity> root = query.from(AnimalEntity.class);
+            query.select(root);
+            return session.createQuery(query).getResultList();
         }
     }
 }

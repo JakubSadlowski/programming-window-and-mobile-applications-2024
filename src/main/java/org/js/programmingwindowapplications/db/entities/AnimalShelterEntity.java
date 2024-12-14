@@ -25,12 +25,6 @@ public class AnimalShelterEntity {
 
     public AnimalShelterEntity() {}
 
-    public AnimalShelterEntity(AnimalShelter shelter) {
-        this.shelterName = shelter.getShelterName();
-        this.maxCapacity = shelter.getMaxCapacity();
-        this.phoneNumber = shelter.getPhoneNumber();
-    }
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -54,11 +48,6 @@ public class AnimalShelterEntity {
             animals.add(animal);
             animal.setShelter(this);  
         }
-    }
-
-    public void removeAnimal(AnimalEntity animal) {
-        animals.remove(animal);
-        animal.setShelter(null);
     }
 
     public AnimalShelter toAnimalShelter() {
