@@ -4,9 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication//(proxyBeanMethods = false)
-public class JavaFXSpringBootApplication {
+public class Application {
     public static void main(String[] args) {
-        FXAppLauncher.launchApp(args);
-//        SpringApplication.run(Test.class, args);
+//        SpringApplication.run(FXAppLauncher.class, args);
+//        FXAppLauncher.launchApp(args);
+        javafx.application.Application.launch(FXAppLauncher.class, args);
     }
 }
