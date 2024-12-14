@@ -27,6 +27,13 @@ A **Java-based Animal Shelter Management System** designed to assist animal shel
 - **Adopt Animals**: Choose and adopt an animal from the shelter.
 - **Request Contact**: Easily request contact with a shelter for adoption inquiries.
 
+### **Data Import/Export**
+- **CSV Export**: Export shelter animal data to CSV files for backup or analysis
+- **CSV Import**: Import animal data from CSV files to populate shelters quickly
+- **Reflection-based Processing**: Automatic handling of Animal class fields for flexible data structure
+- **Error Handling**: Robust error management during file operations
+- **Data Validation**: Ensures data integrity during import/export operations
+
 ---
 
 ## **Architecture**
@@ -39,6 +46,7 @@ The system utilizes the **Facade Design Pattern** to maintain a clear separation
 - **`ShelterManager`**: Manages shelters and animals, including adding, removing, and modifying records.
 - **`ShelterFacade`**: Provides a simplified interface for interacting with shelters and animals.
 - **`AccountsManager`**: Handles user authentication and login functionality.
+- **`ShelterIO`**: Manages data import/export operations for shelter data.
 
 ---
 
@@ -60,12 +68,35 @@ The DAO (Data Access Object) pattern ensures clean and efficient interaction wit
 
 ---
 
+## **IO Operations**
+
+The system includes robust input/output functionality for data management:
+
+### **CSV Export Features**
+- Dynamic field extraction using Java Reflection
+- Automatic header generation from Animal class fields
+- Structured data writing with proper field separation
+- Support for all Animal attributes including custom types
+
+### **CSV Import Features**
+- Header-based field mapping
+- Automatic type conversion for different field types
+- Support for:
+  - String fields
+  - Integer values
+  - Double values
+  - Enum types (AnimalCondition)
+- Comprehensive error handling for file operations
+
+---
+
 ## **GUI**
 
 The user interface is developed with **JavaFX**, offering a modern and user-friendly design. Key components include:
 - **Login Panel**: For administrators and clients.
 - **Shelter and Animal List View**: Allows users to browse available shelters and animals.
 - **Forms**: For adding and modifying shelters and animals.
+- **Import/Export Controls**: Interface for managing data files.
 
 ---
 
@@ -75,6 +106,7 @@ The user interface is developed with **JavaFX**, offering a modern and user-frie
 - **Hibernate**: Database management.
 - **MySQL**: Data persistence.
 - **Facade Pattern**: Simplifies interaction with business logic.
+- **Java Reflection**: Dynamic handling of class fields for IO operations.
 
 ---
 
@@ -103,4 +135,15 @@ The user interface is developed with **JavaFX**, offering a modern and user-frie
    mvn javafx:run
    ```
 
-Special thanks to all contributors and open-source libraries that made this project possible.
+### **Data Management**
+1. Exporting data:
+   - Select a shelter from the list
+   - Click "Export/Import file"
+   - Choose export option and specify filename
+   - Data will be saved in CSV format
+
+2. Importing data:
+   - Select target shelter
+   - Click "Export/Import file"
+   - Choose import option and select CSV file
+   - Ensure CSV format matches system requirements
