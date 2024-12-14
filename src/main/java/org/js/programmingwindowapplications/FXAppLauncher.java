@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.js.programmingwindowapplications.animalshelterUI.LoginPanel;
+import org.js.programmingwindowapplications.db.HibernateUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -20,20 +22,15 @@ public class FXAppLauncher extends javafx.application.Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(AnimalShelterApplication.class);
+        HibernateUtil.testConnection();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         logger.log (Level.INFO  ,"Hello are you here?");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/js/programmingwindowapplications/animalshelterUI/login-panel.fxml"));
-//        loader.setControllerFactory(springContext::getBean);
-
-
-
-        Scene scene = new Scene(loader.load());
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Spring Boot JavaFX Application");
-        primaryStage.show();
+        LoginPanel controller = loader.getController();
+        FXStageBuilder.buildStage(loader, primaryStage);
     }
 
     @Override
@@ -55,6 +52,7 @@ public class FXAppLauncher extends javafx.application.Application {
             // This method is not used because Spring Boot is already launched by the JavaFX init method
         }
     }
+
 
 }
 
